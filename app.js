@@ -45,9 +45,7 @@ res.send('This is monitor test APP, please go to  http://localhost:3000/bitacora
 
 
 app.post('/new', wrapAsync(async (req, res, next) => {
-        console.log(req.body);
         const nuevoIngreso = new Ingreso(req.body)
-<<<<<<< HEAD
 
         // TO DO: MAKE SETTING THE DATE AND TIME MANUALLY WORK!
         if (nuevoIngreso.fecha) {
@@ -55,17 +53,12 @@ app.post('/new', wrapAsync(async (req, res, next) => {
             await nuevoIngreso.save()
             res.redirect('bitacora'); 
         } else {
-            var date = new Date();
+            // new ingreso with current date in UTC (+5 hours Ecuador local time)
+            var date = new Date(); 
             nuevoIngreso.fecha = date;
             await nuevoIngreso.save()
             res.redirect('bitacora')  
         }
-=======
-        await nuevoIngreso.save();
-        res.redirect('/bitacora')
-
-        
->>>>>>> 310ce984d9931e1dad5cd41f4b04f1cc646f89f8
        
 }))
 
@@ -104,34 +97,39 @@ app.use((err, req,res, next) => {
 app.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const { fechaBusqueda } = req.query;
+
     // when user input a date
     const date = new Date(fechaBusqueda)
-    date.setUTCHours(0,0,0,0);
+    // set to 5 hours to ovoid problem with the local time zone.
+    // after 19:00 new "ingresos" are logged with next day date because the server transforms dates to UTC (adding 5 hours)
+    // Ecuador local Time is -5 GMT
+    date.setUTCHours(5,0,0,0);
     const datePlus = new Date(date);
     datePlus.setDate(datePlus.getDate() + 1)
+
+    
     // gets current date automatically
     const fechaAuto = new Date();
-    console.log(fechaAuto, "first")
-    const horaAuto = fechaAuto.setUTCHours(0,0,0,0);
-    const autoPlus = new Date(horaAuto);
+    // set to 5 hours to ovoid problem with the local time zone.
+    // after 19:00 new "ingresos" are logged with next day date because the server transforms dates to UTC (adding 5 hours)
+    // Ecuador local Time is -5 GMT
+    fechaAuto.setUTCHours(5,0,0,0);
+    const autoPlus = new Date(fechaAuto);
     autoPlus.setDate(autoPlus.getDate() + 1)
 
 if (fechaBusqueda) {
-    
+    const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
     const ingresos = await Ingreso.find({"fecha" : {$gte: date, $lt: datePlus}});
-    res.render('bitacora', { ingresos, fecha: fechaBusqueda });
+    res.render('bitacora', { ingresos, fecha: date.toLocaleDateString('en-GB', options) });
+
 } else {
-    console.log(fechaAuto);
+
+    
+    console.log(fechaAuto.toLocaleDateString());
     console.log(autoPlus);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-<<<<<<< HEAD
-=======
-    console.log(fechaAuto.UTC())
-    console.log(autoPlus)
->>>>>>> 310ce984d9931e1dad5cd41f4b04f1cc646f89f8
     const ingresos = await Ingreso.find({"fecha" : {$gte: fechaAuto, $lt: autoPlus}});
-    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto.toLocaleDateString(), fecha: fechaAuto});
-    // .toLocaleDateString('en-GB', options)
+    res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
 }
 
      
@@ -154,7 +152,7 @@ app.get('/lote/:lote', wrapAsync( async (req, res, next) => {
 
 app.delete('/delete/:id', wrapAsync(async(req, res, next) => {
         const { id } = req.params;
-        const ingreso = await Ingreso.findByIdAndDelete(id)
+        await Ingreso.findByIdAndDelete(id)
         res.redirect('/bitacora')
 }))
 

@@ -20,10 +20,10 @@ const ingresoSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    llegada: {
-        type:String,
-        required: true,
-    },
+    // llegada: {
+    //     type:String,
+    //     required: true,
+    // },
     numeroBines: {
         type: Number,
         required: true
