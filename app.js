@@ -82,11 +82,16 @@ app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         res.render('update', { ingreso, llegada })   
 }))
 
-// app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
-//         const { id } = req.params;
-//         const ingreso = await Ingreso.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
-//         res.render('update', { ingreso })     
-// }))
+app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
+        const { id } = req.params;
+        console.log(req.body)
+        const  temp = req.body.fecha;
+        fecha = new Date(temp);
+        fecha.setUTCHours(5,0,0,0);
+        req.body.fecha = fecha;
+        await Ingreso.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
+        res.redirect('/bitacora')   
+}))
 
 app.use((err, req,res, next) => {
     const { status = 500, message = 'Something Went Wrong' } = err;
