@@ -112,15 +112,15 @@ app.get('/bitacora', wrapAsync(async (req, res, next) => {
     const datePlus = new Date(date);
     datePlus.setDate(datePlus.getDate() + 1)
 
-    
+
     // gets current date automatically
     const fechaAuto = new Date();
     // set to 5 hours to ovoid problem with the local time zone.
     // after 19:00 new "ingresos" are logged with next day date because the server transforms dates to UTC (adding 5 hours)
     // Ecuador local Time is -5 GMT
-    fechaAuto.setUTCHours(5,0,0,0);
     const autoPlus = new Date(fechaAuto);
-    autoPlus.setDate(autoPlus.getDate() + 1)
+    autoPlus.setDate(autoPlus.getDate() - 1)
+    // autoPlus.setUTCHours(-24,0,0,0);
 
 if (fechaBusqueda) {
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -130,10 +130,10 @@ if (fechaBusqueda) {
 } else {
 
     
-    console.log(fechaAuto.toLocaleDateString());
+    console.log(fechaAuto);
     console.log(autoPlus);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-    const ingresos = await Ingreso.find({"fecha" : {$gte: fechaAuto, $lt: autoPlus}});
+    const ingresos = await Ingreso.find({"fecha" : {$gte: autoPlus, $lt: fechaAuto}});
     res.render('bitacora', { ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
 }
 
