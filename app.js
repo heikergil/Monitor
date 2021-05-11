@@ -69,17 +69,22 @@ app.get('/show/:id', wrapAsync(async (req, res, next) => {
     if (!ingreso) {
         return next(new AppError('Ingreso No Encontrado', 404));
     }
-        res.render('show', { ingreso }) 
+        const date = ingreso.fecha; 
+        const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        const fecha = date.toLocaleDateString();
+        res.render('show', { ingreso, llegada, fecha }) 
 }))
 
 app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const { id } = req.params;
         const ingreso = await Ingreso.findById(id);
         const date = ingreso.fecha; 
-        const llegada = date.getHours() + ":" + date.getMinutes();
-        console.log(ingreso.fecha);
+        const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric'};
+        const fecha = date.toLocaleDateString('en-GB', options);
+        console.log(fecha);
         console.log(llegada);
-        res.render('update', { ingreso, llegada })   
+        res.render('update', { ingreso, llegada, fecha })   
 }))
 
 app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
@@ -129,7 +134,6 @@ if (fechaBusqueda) {
 
 } else {
 
-    
     console.log(fechaAuto);
     console.log(autoPlus);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };

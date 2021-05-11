@@ -1,8 +1,7 @@
 <% layout('layouts/boilerplate') -%>
     <% 
     // const date = ingreso.fecha; 
-    // const llegada = date.getHours() + ":" + date.getMinutes();
-    
+    // const llegada = date.getHours() + ":" + date.getMinutes() + ":" date.getSeconds();
     %>
 
 
@@ -21,11 +20,11 @@
         <input type="text" name="piscina" value="<%= ingreso.piscina  %>">
     </label>
     <label for="fecha">
-        <input type="date" name="fecha" value="<%=ingreso.fecha%>">  
+        <input type="date" name="fecha" value="2021-05-10">  
     </label>
     <label for="llegada">
         Hora Llegada:
-        <input type="time" name="llegada" value="<%= llegada %>">
+        <input type="time" name="llegada" value=<%= llegada %>>
     </label>
     <label for="numeroBines">
         Numero de Bines/Gavetas:
