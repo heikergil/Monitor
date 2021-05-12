@@ -80,7 +80,7 @@ app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const ingreso = await Ingreso.findById(id);
         const date = ingreso.fecha; 
         const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        const options = { day: '2-digit', month: '2-digit', year: 'numeric'};
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit'};
         const fecha = date.toLocaleDateString('en-GB', options);
         console.log(fecha);
         console.log(llegada);
