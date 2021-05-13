@@ -4,11 +4,11 @@ span {
 
 .grid-ingreso {
     display: grid;
-    grid-template-columns: 0.5fr 2fr 3fr 2fr 1fr 0.5fr 1fr;
+    grid-template-columns: 0.5fr 2fr 3fr 2fr 1fr 1fr 0.5fr 1fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-template-areas:
-      "item lote proveedor piscina llegada bines libras";
+      "item lote proveedor piscina llegada fecha bines libras";
   }
   
   .item { grid-area: item; }
@@ -20,6 +20,8 @@ span {
   .piscina { grid-area: piscina; }
   
   .llegada { grid-area: llegada; }
+
+  .fecha { grid-area: fecha; }
   
   .bines { grid-area: bines; }
   
