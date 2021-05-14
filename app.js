@@ -83,16 +83,19 @@ app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const fecha =  date.toISOString().split('T')[0];
         console.log(fecha);
         console.log(llegada);
-        res.render('update', { ingreso, llegada, fecha })   
+        res.render('update', { ingreso, llegada, fecha });   
 }))
 
 app.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
         const { id } = req.params;
         console.log(req.body)
         const  temp = req.body.fecha;
-        fecha = new Date(temp);
-        fecha.setUTCHours(5,0,0,0);
-        req.body.fecha = fecha;
+        const time = req.body.llegada;
+        const fechaStr = temp +"T"+ time;
+        console.log(fechaStr);
+        const date = new Date(fechaStr);
+        console.log(date);
+        req.body.fecha = date;
         await Ingreso.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
         res.redirect('/bitacora')   
 }))

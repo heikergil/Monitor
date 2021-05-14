@@ -1,9 +1,5 @@
 <% layout('layouts/boilerplate') -%>
-    <% 
-    // const date = ingreso.fecha; 
-    // const llegada = date.getHours() + ":" + date.getMinutes() + ":" date.getSeconds();
-    %>
-
+   
 
     <h2>Editar ingreso</h2>
     <form action='/ingreso/update/<%= ingreso._id%>?_method=PUT' method="post">
@@ -20,15 +16,11 @@
         <input type="text" name="piscina" value="<%= ingreso.piscina  %>">
     </label>
     <label for="fecha">
-<<<<<<< HEAD
         <input type="date" name="fecha" value="<%= fecha  %>">  
-=======
-        <input type="date" name="fecha" value="fecha">  
->>>>>>> ddc3292e3d6200a0beb1b77b3c7f29c2dc8d29bb
     </label>
     <label for="llegada">
         Hora Llegada:
-        <input type="time" name="llegada" value=<%= llegada %>>
+        <input type="time" name="llegada" step="1" value=<%= llegada %>>
     </label>
     <label for="numeroBines">
         Numero de Bines/Gavetas:

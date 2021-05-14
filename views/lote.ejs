@@ -17,18 +17,23 @@
     <span class="proveedor border border-dark py-1  text-center">proveedor</span>
     <span class="piscina border border-dark py-1  text-center">piscina</span>
     <span class="llegada border border-dark py-1  text-center">llegada</span>
+    <span class="fecha border border-dark py-1  text-center" >Fecha</span>
     <span class="bines border border-dark py-1  text-center">#Bines</span> 
     <span class="libras border border-dark py-1 text-center">Libras</span>
 </div>
 <%for (let ingreso of ingresos) {%>
     <%     
     item += 1
+    const fecha = ingreso.fecha.toLocaleDateString();
+    const date = ingreso.fecha;
+    const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(); 
     %> <div class="grid-ingreso w-100">
         <span class="item border border-dark py-1  text-center"><a href="/show/<%=ingreso._id%>"><%=item%></a></span>
         <span class="lote border border-dark py-1  text-center" ><a href="/lote/<%= ingreso.lote %>"><%=ingreso.lote%></a></span>
         <span class="proveedor border border-dark py-1 text-center"><%=ingreso.proveedor%></span>
         <span class="piscina border border-dark py-1  text-center" ><%=ingreso.piscina%></span>
-        <span class="llegada border border-dark py-1  text-center" ><%=ingreso.llegada%></span>
+        <span class="llegada border border-dark py-1  text-center" ><%=llegada%></span>
+        <span class="fecha border border-dark py-1  text-center" ><%=fecha%></span>
         <span class="bines border border-dark py-1  text-center"><%=ingreso.numeroBines%></span> 
         <span class="libras border border-dark py-1 text-center" ><%=ingreso.remitido%></span>
     </div>
