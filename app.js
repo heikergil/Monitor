@@ -3,8 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 const Ingreso = require('./models/ingresos');
+const Programa = require('./models/programa');
 const methodOverride = require('method-override');
-const { DateTime } = require("luxon");
 const AppError = require('./AppError')
 const morgan = require('morgan')
 const engine = require('ejs-mate');
@@ -43,11 +43,47 @@ app.get('/', (req, res) => {
 res.send('This is monitor test APP, please go to  http://localhost:3000/bitacora ')
 })
 
+app.get('/programacion', wrapAsync(async (req, res, next) => {
+
+    const { fechaBusqueda } = req.query;
+
+    // when user input a date
+    const date = new Date(fechaBusqueda)
+    date.setUTCHours(0,0,0,0);
+  
+
+    // gets current date automatically
+    const fechaAuto = new Date();
+    fechaAuto.setUTCHours(0,0,0,0);
+
+
+if (fechaBusqueda) {
+    const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
+    const programacion = await Programa.find({"fecha" : date});
+    console.log(programacion);
+    res.render('programacion', { programacion, fecha: date.toLocaleDateString('en-GB', options) });
+
+} else {
+
+    console.log(fechaAuto);
+    const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
+    const programacion = await Programa.find({"fecha" : fechaAuto});
+    console.log(programacion);
+    res.render('programacion', { programacion, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
+}
+}))
+
+app.post('/programacion', wrapAsync(async (req, res, next) => {
+    const nuevoPrograma = new Programa(req.body)
+
+    await nuevoPrograma.save()
+    res.redirect('programacion'); 
+}))
 
 app.post('/new', wrapAsync(async (req, res, next) => {
         const nuevoIngreso = new Ingreso(req.body)
 
-        // TO DO: MAKE SETTING THE DATE AND TIME MANUALLY WORK!
+        
         if (nuevoIngreso.fecha) {
             nuevoIngreso.fecha = new Date(nuevoIngreso.fecha);
             await nuevoIngreso.save()

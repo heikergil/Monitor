@@ -27,3 +27,27 @@ span {
   
   .libras { grid-area: libras; }
   
+
+  .grid-programa {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr 2fr 2fr 3fr 2fr 2fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "itemp proveedorp productop cantidadp piscinap lotep llegadap";
+  }
+  
+  .itemp { grid-area: itemp; }
+    
+  .proveedorp { grid-area: proveedorp; }
+  
+  .productop { grid-area: productop; }
+
+  .cantidadp { grid-area: cantidadp; }
+
+  .piscinap { grid-area: piscinap; }
+  
+  .lotep { grid-area: lotep; }
+
+  .llegadap { grid-area: llegadap; }
+

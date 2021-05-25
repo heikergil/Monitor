@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') -%>
 
 <h2 class="my-3 text-center">NUEVO INGRESO</h2>
-    <form class="d-flex" action="/new" method="post">
+    <form class="d-flex justify-content-sm-between" action="/new" method="post">
     
         <label for="lote">
             <input class="form-control" type="number" name="lote" placeholder="Lote">
@@ -70,6 +70,5 @@
         <span class="libras border border-dark py-1 text-center" ><%=ingreso.remitido%></span>
     </div>
    
-              
     <% } %> 
 
