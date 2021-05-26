@@ -49,12 +49,14 @@ app.get('/programacion', wrapAsync(async (req, res, next) => {
 
     // when user input a date
     const date = new Date(fechaBusqueda)
-    date.setUTCHours(0,0,0,0);
+    date.setUTCHours(5,0,0,0);
   
 
     // gets current date automatically
     const fechaAuto = new Date();
-    fechaAuto.setUTCHours(0,0,0,0);
+    fechaAuto.setHours(fechaAuto.getHours() - 5);
+    fechaAuto.setUTCHours(0,0,0,0)
+    
 
 
 if (fechaBusqueda) {
@@ -75,7 +77,10 @@ if (fechaBusqueda) {
 
 app.post('/programacion', wrapAsync(async (req, res, next) => {
     const nuevoPrograma = new Programa(req.body)
-
+    const dateUTC = new Date;
+    dateUTC.setHours(dateUTC.getHours() - 5);
+    dateUTC.setUTCHours(0,0,0,0)
+    nuevoPrograma.fecha = dateUTC;
     await nuevoPrograma.save()
     res.redirect('programacion'); 
 }))
