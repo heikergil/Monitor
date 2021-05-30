@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 const AppError = require('./AppError')
 const morgan = require('morgan')
 const engine = require('ejs-mate');
-
+require('./programas');
 
 
 app.use(morgan('tiny'));
@@ -38,6 +38,9 @@ function wrapAsync(fn) {
     }
 }
 
+
+ 
+
 app.get('/', (req, res) => {
 
 res.send('This is monitor test APP, please go to  http://localhost:3000/bitacora ')
@@ -47,33 +50,35 @@ app.get('/programacion', wrapAsync(async (req, res, next) => {
 
     const { fechaBusqueda } = req.query;
 
-    // when user input a date
-    const date = new Date(fechaBusqueda)
-    date.setUTCHours(5,0,0,0);
-  
-
-    // gets current date automatically
-    const fechaAuto = new Date();
-    fechaAuto.setHours(fechaAuto.getHours() - 5);
-    fechaAuto.setUTCHours(0,0,0,0)
     
-
+// INGRESAR PROGRAMAS DE RECEPCION
 
 if (fechaBusqueda) {
+    // when user input a date
+    const date = new Date(fechaBusqueda)
+    
+    date.setHours(date.getHours() - 5);
+    date.setUTCHours(0,0,0,0);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
     const programacion = await Programa.find({"fecha" : date});
     console.log(programacion);
     res.render('programacion', { programacion, fecha: date.toLocaleDateString('en-GB', options) });
 
 } else {
-
+      // gets current date automatically
+      const fechaAuto = new Date();
+      console.log(fechaAuto)
+      fechaAuto.setHours(fechaAuto.getHours() - 5);
+      fechaAuto.setUTCHours(0,0,0,0)
     console.log(fechaAuto);
-    const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
     const programacion = await Programa.find({"fecha" : fechaAuto});
-    console.log(programacion);
-    res.render('programacion', { programacion, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
+    
+    res.render('programacion', { programacion, fechaBusqueda: fechaAuto});
 }
 }))
+
+
+// INGRESAR PROGRAMAS DE RECEPCION
 
 app.post('/programacion', wrapAsync(async (req, res, next) => {
     const nuevoPrograma = new Programa(req.body)
@@ -103,6 +108,7 @@ app.post('/new', wrapAsync(async (req, res, next) => {
        
 }))
 
+// VER INGRESOS
 
 app.get('/show/:id', wrapAsync(async (req, res, next) => {
         const { id } = req.params;
@@ -115,6 +121,8 @@ app.get('/show/:id', wrapAsync(async (req, res, next) => {
         const fecha = date.toLocaleDateString();
         res.render('show', { ingreso, llegada, fecha }) 
 }))
+
+// MODIFICAR INGRESOS
 
 app.get('/update/:id', wrapAsync(async (req, res, next)=> {
         const { id } = req.params;
@@ -146,6 +154,7 @@ app.use((err, req,res, next) => {
     res.status(status).send(message);
 })
 
+// VER INGRESOS
 
 app.get('/bitacora', wrapAsync(async (req, res, next) => {
     
@@ -188,6 +197,7 @@ if (fechaBusqueda) {
 }
 ))
 
+// VER LOTES
 app.get('/lote/:lote', wrapAsync( async (req, res, next) => {
     
     const { lote } = req.params;

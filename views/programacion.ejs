@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate') -%>
 
-<h1 class="text-center my-5 ">INGRESO PROGRAMA - BRISAS  <%= fecha %> </h1>
+<h1 class="text-center my-5 ">INGRESO PROGRAMA - BRISAS  <%= %> </h1>
 
 <div class="container my-3">
     <form class="h-25 d-flex" action="/programacion" method="get">
-        <input class="form-control w-25" type="date" id="fechaBusqueda" value="<%= fecha %>" name="fechaBusqueda">
+        <input class="form-control w-25" type="date" id="fechaBusqueda" value="<%=  %>" name="fechaBusqueda">
         <button class="btn btn-success mx-3">Fecha</button>
         </form>
 </div>
@@ -68,7 +68,7 @@
             <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
             <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
             <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap border border-dark py-1  text-center" ><%=fecha%></span>
+            <span class="fechap border border-dark py-1  text-center" ><%= %></span>
         </div>
        
         <% } %> 
