@@ -46,34 +46,36 @@ app.get('/', (req, res) => {
 res.send('This is monitor test APP, please go to  http://localhost:3000/bitacora ')
 })
 
+// VER PROGRAMAS DE RECEPCION
 app.get('/programacion', wrapAsync(async (req, res, next) => {
 
     const { fechaBusqueda } = req.query;
 
     
-// INGRESAR PROGRAMAS DE RECEPCION
+
 
 if (fechaBusqueda) {
     // when user input a date
     const date = new Date(fechaBusqueda)
-    
-    date.setHours(date.getHours() - 5);
-    date.setUTCHours(0,0,0,0);
+    date.setHours(date.getHours() + 5);
+    console.log(date);
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
     const programacion = await Programa.find({"fecha" : date});
+    const fechaIngreso =  date.toISOString().split('T')[0];
     console.log(programacion);
-    res.render('programacion', { programacion, fecha: date.toLocaleDateString('en-GB', options) });
+    res.render('programacion', { programacion, fecha: date.toLocaleDateString('en-GB', options), fechaIngreso:fechaIngreso });
 
 } else {
       // gets current date automatically
       const fechaAuto = new Date();
       console.log(fechaAuto)
-      fechaAuto.setHours(fechaAuto.getHours() - 5);
-      fechaAuto.setUTCHours(0,0,0,0)
-    console.log(fechaAuto);
+      const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
+        console.log(fechaAuto);
+        const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
+        console.log(fechaIngreso)
     const programacion = await Programa.find({"fecha" : fechaAuto});
     
-    res.render('programacion', { programacion, fechaBusqueda: fechaAuto});
+    res.render('programacion', { programacion, fecha: fechaAuto.toLocaleDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }
 }))
 
@@ -197,7 +199,7 @@ if (fechaBusqueda) {
 }
 ))
 
-// VER LOTES
+// VER LOTE
 app.get('/lote/:lote', wrapAsync( async (req, res, next) => {
     
     const { lote } = req.params;
