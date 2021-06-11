@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') -%>
+
+
+
+<h2 class="my-3 text-center">NUEVO INGRESO</h2>
+    <form id="ingreso" class="d-flex justify-content-sm-around" action="/new" method="post">
+    
+        <label for="lote">
+            <input class="form-control" type="text" name="lote" id="lote" form="ingreso" value="<%= programa.lote %>" readonly>  
+        </label>
+
+            
+    <label for="proveedor">
+        <input class="form-control" type="text" name="proveedor" value="<%= programa.proveedor %>" id="proveedor" readonly>
+    </label>
+
+    <label for="piscina">
+        <input class="form-control" type="text" name="piscina" value="<%=programa.piscina %>" readonly>
+    </label>
+    <!-- <label for="fecha">
+        <input class="form-control" type="date" name="fecha" >  
+    </label>
+    <label for="llegada">
+        <input class="form-control" type="time" name="llegada" placeholder="Hora Llegada">
+    </label> -->
+
+    <label for="numeroBines">
+        <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas">
+    </label>
+
+    <label for="remitido">
+        <input class="form-control" type="number" name="remitido" placeholder="Libraje">
+    </label>
+    
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+    
+    </form>
+
+

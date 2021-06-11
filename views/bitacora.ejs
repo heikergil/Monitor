@@ -1,17 +1,26 @@
 <% layout('layouts/boilerplate') -%>
 
+
+
 <h2 class="my-3 text-center">NUEVO INGRESO</h2>
-    <form class="d-flex justify-content-sm-between" action="/new" method="post">
+    <form id="ingreso" class="d-flex justify-content-sm-around" action="/verificar" method="GET">
     
         <label for="lote">
-            <input class="form-control" type="number" name="lote" placeholder="Lote">
+            <select class="form-select" name="lote" id="lote" form="ingreso" placeholder="lote">
+                <option value="" selected>Seleccione un lote</option>
+                <%for (let lote of lotes) {%>
+                <option value="<%=lote.lote%>"><%=lote.lote%></option>
+                <%}%> 
+                </select>
         </label>
-    
+
+            
     <label for="proveedor">
-        <input class="form-control" type="text" name="proveedor" placeholder="Proveedor">
+        <input class="form-control" type="text" name="proveedor" placeholder="Proveedor" id="proveedor" disabled>
     </label>
+
     <label for="piscina">
-        <input class="form-control" type="text" name="piscina" placeholder="Piscina">
+        <input class="form-control" type="text" name="piscina" placeholder="Piscina" disabled>
     </label>
     <!-- <label for="fecha">
         <input class="form-control" type="date" name="fecha" >  
@@ -19,14 +28,16 @@
     <label for="llegada">
         <input class="form-control" type="time" name="llegada" placeholder="Hora Llegada">
     </label> -->
+
     <label for="numeroBines">
-        <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas">
+        <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas" disabled>
     </label>
+
     <label for="remitido">
-        <input class="form-control" type="number" name="remitido" placeholder="Libraje">
+        <input class="form-control" type="number" name="remitido" placeholder="Libraje" disabled>
     </label>
     
-    <button type="submit" class="btn btn-primary">Ingresar</button>
+    <button type="submit" class="btn btn-success">Verificar Lote</button>
     
     </form>
 
@@ -71,4 +82,3 @@
     </div>
    
     <% } %> 
-
