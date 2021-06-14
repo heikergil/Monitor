@@ -88,6 +88,6 @@ app.use((err, req,res, next) => {
         res.status(status).send(message);
     })
 const port = process.env.PORT || 3000;
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log(`MonitorApp listening on port ${port}`);
 })
