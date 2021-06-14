@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -11,14 +13,16 @@ const engine = require('ejs-mate');
 const programacion = require("./routes/programas/programacion");
 const bitacora = require('./routes/bitacora/bitacora');
 
+// Import variables
+require('dotenv').config({path: 'vars.env'});
 
 
 app.use(morgan('tiny'));
 
 app.use(express.static(__dirname + '/public'));
-
+const = dbUrl = process.env.DB_URL|| 'mongodb://localhost:27017/monitor-test';
 // connection to mongoDB with mongoose
-mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
     console.log('CONECTED TO DBS')
 })
