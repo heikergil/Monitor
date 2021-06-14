@@ -20,7 +20,7 @@ require('dotenv').config({path: 'vars.env'});
 app.use(morgan('tiny'));
 
 app.use(express.static(__dirname + '/public'));
-const = dbUrl = process.env.DB_URL|| 'mongodb://localhost:27017/monitor-test';
+const dbUrl = process.env.DB_URL|| 'mongodb://localhost:27017/monitor-test';
 // connection to mongoDB with mongoose
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
@@ -87,7 +87,7 @@ app.use((err, req,res, next) => {
         const { status = 500, message = 'Something Went Wrong' } = err;
         res.status(status).send(message);
     })
-
+const port = process.env.PORT || 3000;
 app.listen(3000, () => {
-    console.log('MonitorApp listening on port 3000');
+    console.log(`MonitorApp listening on port ${port}`);
 })
