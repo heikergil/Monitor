@@ -10,7 +10,7 @@
 </div>
 
 
-<h2 class="my-3 text-center">ingresar programa</h2>
+<h2 class="my-3 text-center">Ingresar programa</h2>
     <form class="d-flex justify-content-sm-between" action="/programacion" method="post">
         
     
@@ -40,8 +40,45 @@
 
     <button type="submit" class="btn btn-primary">Programar</button>
     
+    <!-- programacion, programacionAnterior, programacionProxima, -->
+
     </form>
 
+    <!-- PROGRAMA DEL DIA ANTERIOR -->
+
+    <div class="grid-programa w-100 mt-5">
+        <span class="itemp border border-dark py-1  text-center">item</span>
+        <span class="proveedorp border border-dark py-1 text-center">Proveedor</span>
+        <span class="productop border border-dark py-1  text-center">Producto</span>
+        <span class="cantidadp border border-dark py-1  text-center">Cantidad</span>
+        <span class="piscinap border border-dark py-1  text-center">Piscina</span>
+        <span class="lotep border border-dark py-1  text-center">Lote</span> 
+        <span class="llegadap border border-dark py-1  text-center">Fecha</span>
+    </div>
+    <% 
+    var itemy = 0;
+    %> 
+    <%for (let programa of programacionAnterior) {%>
+        <% 
+        const date = programa.fecha;
+        const fechay = programa.fecha.toDateString(); 
+    
+        
+        itemy += 1
+        %> <div class="grid-programa w-100">
+            <span class="itemp border border-dark py-1  text-center"><%=itemy%></span>
+            <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
+            <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap border border-dark py-1  text-center" ><%= fechay %></span>
+        </div>
+       
+        <% } %> 
+
+
+            <!-- PROGRAMA ACTUAL -->
     <div class="grid-programa w-100 mt-5">
         <span class="itemp border border-dark py-1  text-center">item</span>
         <span class="proveedorp border border-dark py-1 text-center">Proveedor</span>
@@ -57,7 +94,7 @@
     <%for (let programa of programacion) {%>
         <% 
         const date = programa.fecha;
-        const fecha = programa.fecha.toLocaleDateString(); 
+        const fecha = programa.fecha.toDateString(); 
     
         
         item += 1
@@ -68,8 +105,40 @@
             <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
             <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
             <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap border border-dark py-1  text-center" ><%= fechaIngreso %></span>
+            <span class="fechap border border-dark py-1  text-center" ><%= fecha %></span>
         </div>
        
         <% } %> 
 
+    <!-- PROGRAMA PROXIMO DIA -->
+
+    <div class="grid-programa w-100 mt-5">
+        <span class="itemp border border-dark py-1  text-center">item</span>
+        <span class="proveedorp border border-dark py-1 text-center">Proveedor</span>
+        <span class="productop border border-dark py-1  text-center">Producto</span>
+        <span class="cantidadp border border-dark py-1  text-center">Cantidad</span>
+        <span class="piscinap border border-dark py-1  text-center">Piscina</span>
+        <span class="lotep border border-dark py-1  text-center">Lote</span> 
+        <span class="llegadap border border-dark py-1  text-center">Fecha</span>
+    </div>
+    <% 
+    var itemx = 0;
+    %> 
+    <%for (let programa of programacionProxima) {%>
+        <% 
+        const date = programa.fecha;
+        const fechax = programa.fecha.toDateString(); 
+    
+        
+        itemx += 1
+        %> <div class="grid-programa w-100">
+            <span class="itemp border border-dark py-1  text-center"><%=itemx%></span>
+            <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
+            <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap border border-dark py-1  text-center" ><%= fechax %></span>
+        </div>
+       
+        <% } %> 

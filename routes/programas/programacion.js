@@ -23,15 +23,29 @@ if (fechaBusqueda) {
     res.render('programacion', { programacion, fecha: date.toLocaleDateString('en-GB', options), fechaIngreso:fechaIngreso });
 
 } else {
-      // gets current date automatically
-      const fechaAuto = new Date();
-      fechaAuto.setHours(fechaAuto.getHours() -5);
-      fechaAuto.setUTCHours(0,0,0,0);
+      
+       // fecha ayer
+       const fechaAnterior = new Date();
+       fechaAnterior.setHours(fechaAnterior.getHours() - 24);
+       fechaAnterior.setUTCHours(0,0,0,0,);
+
+        // Fecha Actual
+        const fechaAuto = new Date();
+        fechaAuto.setHours(fechaAuto.getHours() -5);
+        fechaAuto.setUTCHours(0,0,0,0);
+        
+        // fecha mañana
+       const fechaProxima = new Date();
+       fechaProxima.setHours(fechaProxima.getHours() + 24);
+       fechaProxima.setUTCHours(0,0,0,0);
+       
       const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
       const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
-    const programacion = await Programa.find({"fecha" : fechaAuto});
-    
-    res.render('programacion', { programacion, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
+
+        const programacionAnterior = await Programa.find({"fecha" : fechaAnterior});
+        const programacion = await Programa.find({"fecha" : fechaAuto});
+        const programacionProxima = await Programa.find({"fecha" : fechaProxima});
+    res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }
 }))
 
@@ -45,7 +59,8 @@ router.post('/programacion', wrapAsync(async (req, res, next) => {
     if (verificarLote) {
         res.send(`Lote ya esta asignado a ${verificarLote.proveedor} piscina: ${verificarLote.piscina}`);
     } else {
-        await nuevoPrograma.save()
+        console.log(nuevoPrograma);
+        // await nuevoPrograma.save()
         res.redirect('programacion'); 
     }
 }))

@@ -1,11 +1,7 @@
-
-
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-const Ingreso = require('./models/ingresos');
-const Programa = require('./models/programa');
 const methodOverride = require('method-override');
 const AppError = require('./AppError')
 const morgan = require('morgan')
@@ -84,8 +80,9 @@ app.get('/', (req, res) => {
     })
 
 app.use((err, req,res, next) => {
-        const { status = 500, message = 'Something Went Wrong' } = err;
-        res.status(status).send(message);
+    console.log(err);
+    // const { status = 500, message = 'Something Went Wrong' } = err;
+    res.render('error', {err});
     })
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
