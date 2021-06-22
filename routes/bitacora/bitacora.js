@@ -41,6 +41,21 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     autoPlus.setDate(autoPlus.getDate() - 1)
     // autoPlus.setUTCHours(-24,0,0,0);
     
+
+
+     // fecha ayer
+     const fechaAnterior = new Date();
+     fechaAnterior.setHours(fechaAnterior.getHours() -5);
+     fechaAnterior.setUTCHours(0,0,0,0);
+     fechaAnterior.setHours(fechaAnterior.getHours() - 24);
+     console.log(fechaAnterior);
+
+          
+      // fecha mañana
+     const fechaProxima = new Date();
+     fechaProxima.setHours(fechaProxima.getHours() - 5);
+     fechaProxima.setUTCHours(0,0,0,0);
+     fechaProxima.setHours(fechaProxima.getHours() + 24);
     // Fecha busqueda programa del dia
     
     const fechaPrograma = new Date();
@@ -49,7 +64,7 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
     const ingresos = await Ingreso.find({"fecha" : {$gte: autoPlus, $lt: fechaAuto}});
-    const lotes = await Programa.find({"fecha" : fechaPrograma })
+    const lotes = await Programa.find({"fecha" : {$gte: fechaAnterior, $lte: fechaProxima} })
     console.log(lotes);
     res.render('bitacora', { lotes, ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
     }

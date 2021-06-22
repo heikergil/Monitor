@@ -61,7 +61,7 @@
     <%for (let programa of programacionAnterior) {%>
         <% 
         const date = programa.fecha;
-        const fechay = programa.fecha.toDateString(); 
+        const fechay = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear(); 
     
         
         itemy += 1
@@ -94,8 +94,8 @@
     <%for (let programa of programacion) {%>
         <% 
         const date = programa.fecha;
-        const fecha = programa.fecha.toDateString(); 
-    
+        const fecha = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
+            
         
         item += 1
         %> <div class="grid-programa w-100">
@@ -127,7 +127,7 @@
     <%for (let programa of programacionProxima) {%>
         <% 
         const date = programa.fecha;
-        const fechax = programa.fecha.toDateString(); 
+        const fechax = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
     
         
         itemx += 1
