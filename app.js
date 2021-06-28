@@ -17,10 +17,10 @@ app.use(morgan('tiny'));
 
 app.use(express.static(__dirname + '/public'));
 // conectar con base de dato remota
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/monitor-test';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/monitor-test';
 
 // conectar con base de datos local
-const dbUrl ='mongodb://localhost:27017/monitor-test';
+// const dbUrl ='mongodb://localhost:27017/monitor-test';
 // connection to mongoDB with mongoose
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
@@ -74,7 +74,8 @@ app.delete('/delete/:id', bitacora);
 app.get('/programacion', programacion);
 // ingresar programacion
 app.post('/programacion', programacion);
-
+// corregir lote programado
+app.get('/corregir/:id', programacion);
 
 
 

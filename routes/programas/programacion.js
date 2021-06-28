@@ -75,6 +75,21 @@ router.post('/programacion', wrapAsync(async (req, res, next) => {
     }
 }))
 
+// VER LOTE PROGRAMADO
+
+router.get('/corregir/:id', wrapAsync(async (req, res, next) => {
+    const { id } = req.params;
+    console.log(id);
+    const lotePrograma = await Programa.findById(id);
+    console.log(lotePrograma)
+    // const date = ingreso.fecha; 
+    // const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    // const fecha =  date.toISOString().split('T')[0];
+    // console.log(fecha);
+    // console.log(llegada);
+    res.render('corregir', { lotePrograma }); 
+}))
+
 
 
 module.exports = router;

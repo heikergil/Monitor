@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1 class="text-center my-5 ">verificar lote programado</h1>
+
+
+    <form class="d-flex justify-content-sm-between" action="/programacion" method="post">
+        
+    
+    <label for="proveedor">
+        <input class="form-control" type="text" name="proveedor" placeholder="Proveedor" value="<%= lotePrograma.proveedor %>">
+    </label>
+
+    <label for="producto">
+        <input class="form-control" type="text" name="producto" placeholder="Producto" value="<%= lotePrograma.producto %>">
+    </label>
+
+    <label for="piscina">
+        <input class="form-control" type="text" name="piscina" placeholder="Piscina" value="<%= lotePrograma.piscina %>" >
+    </label>
+
+    <label for="lote">
+        <input class="form-control" type="number" name="lote" placeholder="Lote" value="<%=lotePrograma.lote%>">
+    </label>
+
+    <label for="cantidad">
+        <input class="form-control" type="number" name="cantidad" placeholder="Cantidad" value="<%= lotePrograma.cantidad %>">
+    </label>
+
+    <label for="fecha">
+        <input class="form-control" type="date" name="fecha" value="<%=lotePrograma.fecha %>">  
+    </label>
+
+    <button type="submit" class="btn btn-primary">corregir</button>
+    
+
+    </form>
+
+    <div class="container d-flex">
+        <a type="button" class="btn btn-secondary mx-1" href="/programacion">atras</a>
+        <a type="button" class="btn btn-primary mx-1" href="">editar</a>
+        <form class="mx-3" action="/delete/?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">borrar</button>
+        </form></div>

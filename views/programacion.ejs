@@ -66,7 +66,7 @@
         
         itemy += 1
         %> <div class="grid-programa w-100">
-            <span class="itemp border border-dark py-1  text-center"><%=itemy%></span>
+            <span class="itemp border border-dark py-1  text-center"> <a href="/corregir/<%= programa._id %> "><%=itemy%></a> </span>
             <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
             <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
             <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
@@ -99,7 +99,7 @@
         
         item += 1
         %> <div class="grid-programa w-100">
-            <span class="itemp border border-dark py-1  text-center"><%=item%></span>
+            <span class="itemp border border-dark py-1  text-center"><a href="/corregir/<%=programa._id%>"><%=item%></a></span>
             <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
             <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
             <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>

@@ -63,7 +63,7 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     fechaPrograma.setUTCHours(0,0,0,0);
     
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-    const ingresos = await Ingreso.find({"fecha" : {$gte: autoPlus, $lt: fechaAuto}});
+    const ingresos = await Ingreso.find({"fecha" : {$gte: autoPlus, $lte: fechaAuto}});
     const lotes = await Programa.find({"fecha" : {$gte: fechaAnterior, $lte: fechaProxima} })
     console.log(lotes);
     res.render('bitacora', { lotes, ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
@@ -151,7 +151,7 @@ router.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
 
 // VER LOTE
 router.get('/lote/:lote', wrapAsync( async (req, res, next) => {
-
+    
 const { lote } = req.params;
 const ingresos = await Ingreso.find({"lote":lote})
 var totalRemitido = 0;
