@@ -75,7 +75,11 @@ app.get('/programacion', programacion);
 // ingresar programacion
 app.post('/programacion', programacion);
 // corregir lote programado
-app.get('/corregir/:id', programacion);
+app.get('/programacion/corregir/:id', programacion);
+// actualizar lote programado en DB
+app.put('/programacion/corregir/:id', programacion);
+// eliminar lote programado
+app.delete('/programacion/delete/:id', programacion);
 
 
 

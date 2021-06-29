@@ -3,7 +3,7 @@
 <h1 class="text-center my-5 ">verificar lote programado</h1>
 
 
-    <form class="d-flex justify-content-sm-between" action="/programacion" method="post">
+    <form class="d-flex justify-content-sm-between" action="/programacion/corregir/<%= lotePrograma._id%>?_method=PUT" method="post">
         
     
     <label for="proveedor">
@@ -27,17 +27,16 @@
     </label>
 
     <label for="fecha">
-        <input class="form-control" type="date" name="fecha" value="<%=lotePrograma.fecha %>">  
+        <input class="form-control" type="date" name="fecha" value="<%=fecha %>">  
     </label>
 
-    <button type="submit" class="btn btn-primary">corregir</button>
+    <button type="submit" class="btn btn-success">corregir</button>
     
 
     </form>
 
-    <div class="container d-flex">
+    <div class="container d-flex mt-3">
         <a type="button" class="btn btn-secondary mx-1" href="/programacion">atras</a>
-        <a type="button" class="btn btn-primary mx-1" href="">editar</a>
-        <form class="mx-3" action="/delete/?_method=DELETE" method="POST">
+        <form class="mx-3" action="/programacion/delete/<%=lotePrograma._id%>/?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-danger">borrar</button>
         </form></div>

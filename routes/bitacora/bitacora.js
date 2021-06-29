@@ -133,7 +133,7 @@ router.get('/update/:id', wrapAsync(async (req, res, next)=> {
 // MODIFICAR INGRESO EN DB
 router.put('/ingreso/update/:id', wrapAsync(async (req, res, next) => {
     const { id } = req.params;
-    console.log(req.body)
+    console.log(req.body);
     const  temp = req.body.fecha;
     const time = req.body.llegada;
     const fechaStr = temp +"T"+ time;

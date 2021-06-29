@@ -71,25 +71,44 @@ router.post('/programacion', wrapAsync(async (req, res, next) => {
     } else {
         console.log(nuevoPrograma);
         await nuevoPrograma.save()
-        res.redirect('programacion'); 
+        res.redirect('/programacion'); 
     }
 }))
 
 // VER LOTE PROGRAMADO
 
-router.get('/corregir/:id', wrapAsync(async (req, res, next) => {
+router.get('/programacion/corregir/:id', wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     console.log(id);
     const lotePrograma = await Programa.findById(id);
     console.log(lotePrograma)
-    // const date = ingreso.fecha; 
+    const date = lotePrograma.fecha; 
     // const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    // const fecha =  date.toISOString().split('T')[0];
+    const fecha =  date.toISOString().split('T')[0];
     // console.log(fecha);
     // console.log(llegada);
-    res.render('corregir', { lotePrograma }); 
+    res.render('corregir', { lotePrograma, fecha }); 
 }))
 
 
+// MODIFICAR LOTE PROGRAMADO EN DB
+router.put('/programacion/corregir/:id', wrapAsync(async (req, res, next) => {
+    const { id } = req.params;
+    console.log(req.body);
+    const  temp = req.body.fecha;
+    const date = new Date(temp);
+    req.body.fecha = date;
+    console.log(req.body);
+    await Programa.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
+    res.redirect('/programacion');   
+}))
+
+// BORRAR LOTE PROGRAMADO
+router.delete('/programacion/delete/:id', wrapAsync(async(req, res, next) => {
+    const { id } = req.params;
+    console.log(id);
+    await Programa.findByIdAndDelete(id)
+    res.redirect('/programacion');
+}))
 
 module.exports = router;

@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') -%>
 
 
+<% if (typeof lotes !== 'undefined') {%> 
 
 <h2 class="my-3 text-center">NUEVO INGRESO</h2>
     <form id="ingreso" class="d-flex justify-content-sm-around" action="/verificar" method="GET">
@@ -15,13 +16,13 @@
         </label>
 
             
-    <label for="proveedor">
+    <!-- <label for="proveedor">
         <input class="form-control" type="text" name="proveedor" placeholder="Proveedor" id="proveedor" disabled>
     </label>
 
     <label for="piscina">
         <input class="form-control" type="text" name="piscina" placeholder="Piscina" disabled>
-    </label>
+    </label> -->
     <!-- <label for="fecha">
         <input class="form-control" type="date" name="fecha" >  
     </label>
@@ -29,18 +30,18 @@
         <input class="form-control" type="time" name="llegada" placeholder="Hora Llegada">
     </label> -->
 
-    <label for="numeroBines">
+    <!-- <label for="numeroBines">
         <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas" disabled>
     </label>
 
     <label for="remitido">
         <input class="form-control" type="number" name="remitido" placeholder="Libraje" disabled>
-    </label>
+    </label> -->
     
     <button type="submit" class="btn btn-success">Verificar Lote</button>
     
     </form>
-
+<% }%> 
 
 <% var item = 0; %> 
 
