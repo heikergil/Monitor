@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') -%>
+
+<!-- ************ RESUMEN MATERIA PRIMA ************ -->
+
+<% var item = 0; %> 
+
+<h1 class="text-center my-5 ">MP - BRISAS  <%= %> </h1>
+
+<div class="container my-3">
+    <form class="h-25 d-flex" action="/bitacora" method="get">
+        <input class="form-control w-25" type="date" id="fechaBusqueda" name="fechaBusqueda">
+        <button class="btn btn-success mx-3">Buscar por Fecha</button>
+        </form>
+</div>
+
+<div class="grid-ingreso w-100">
+    <span class="item border border-dark py-1  text-center">item</span>
+    <span class="lote border border-dark py-1 text-center">lote</span>
+    <span class="proveedor border border-dark py-1  text-center">proveedor</span>
+    <span class="piscina border border-dark py-1  text-center">piscina</span>
+    <span class="llegada border border-dark py-1  text-center">llegada</span>
+    <span class="fecha border border-dark py-1  text-center">Fecha</span>
+    <span class="bines border border-dark py-1  text-center">#Bines</span> 
+    <span class="libras border border-dark py-1  text-center">Libras</span>
+</div>
+
+ <div class="grid-ingreso w-100">
+        <span class="item border border-dark py-1  text-center"><a href="/show/<%=ingreso._id%>"><%=item%></a></span>
+        <span class="lote border border-dark py-1  text-center" ><a href="/lote/<%= ingreso.lote %>"><%=ingreso.lote%></a></span>
+        <span class="proveedor border border-dark py-1 text-center"><%=ingreso.proveedor%></span>
+        <span class="piscina border border-dark py-1  text-center" ><%=ingreso.piscina%></span>
+        <span class="llegada border border-dark py-1  text-center" ><%=llegada%></span>
+        <span class="fecha border border-dark py-1  text-center" ><%=fecha%></span>
+        <span class="bines border border-dark py-1  text-center"><%=ingreso.numeroBines%></span> 
+        <span class="libras border border-dark py-1 text-center" ><%=ingreso.remitido%></span>
+    </div>
+   
+    <% } %> 
