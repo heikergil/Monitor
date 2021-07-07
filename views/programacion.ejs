@@ -11,34 +11,63 @@
 
 
 <h2 class="my-3 text-center">Ingresar programa</h2>
-    <form class="d-flex justify-content-sm-between" action="/programacion" method="post">
-        
+
+    <form class="d-flex justify-content-sm-start align-content-between flex-sm-wrap border border-primary" action="/programacion" method="post">
     
-    <label for="proveedor">
+    
+    <label class="m-2" for="proveedor">
         <input class="form-control" type="text" name="proveedor" placeholder="Proveedor">
     </label>
 
-    <label for="producto">
+    <label class="m-2" for="producto">
         <input class="form-control" type="text" name="producto" placeholder="Producto">
     </label>
 
-    <label for="piscina">
+    <label class="m-2" for="piscina">
         <input class="form-control" type="text" name="piscina" placeholder="Piscina">
     </label>
 
-    <label for="lote">
+    <label class="m-2" for="lote">
         <input class="form-control" type="number" name="lote" placeholder="Lote">
     </label>
 
-    <label for="cantidad">
+    <label class="m-2" for="cantidad">
         <input class="form-control" type="number" name="cantidad" placeholder="Cantidad">
-    </label>
+    </label>  
 
-    <label for="fecha">
+    <label class="m-2" for="fecha">
         <input class="form-control" type="date" name="fecha" value="<%= fechaIngreso %>" >  
     </label>
 
-    <button type="submit" class="btn btn-primary">Programar</button>
+    <label class="m-2" for="hora" >
+        <select class="form-select w-100 h-100" name="hora">
+            <option value="00:00">00:00</option>
+            <option value="01:00">01:00</option>
+            <option value="02:00">02:00</option>
+            <option value="03:00">03:00</option>
+            <option value="05:00">04:00</option>
+            <option value="06:00">06:00</option>
+            <option value="07:00">07:00</option>
+            <option value="08:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+            <option value="18:00">18:00</option>
+            <option value="19:00">19:00</option>
+            <option value="20:00">20:00</option>
+            <option value="21:00">21:00</option>
+            <option value="22:00">22:00</option>
+            <option value="23:00">23:00</option>
+        </select>  
+    </label>
+
+    <button type="submit" class="btn btn-primary m-2 jend">Programar</button>
     
     <!-- programacion, programacionAnterior, programacionProxima, -->
 

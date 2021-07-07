@@ -8,6 +8,7 @@ const morgan = require('morgan')
 const engine = require('ejs-mate');
 const programacion = require("./routes/programas/programacion");
 const bitacora = require('./routes/bitacora/bitacora');
+const matPrima = require('./routes/matPrima/matPrima');
 
 // Import variables
 require('dotenv').config({path: 'vars.env'});
@@ -81,6 +82,9 @@ app.put('/programacion/corregir/:id', programacion);
 // eliminar lote programado
 app.delete('/programacion/delete/:id', programacion);
 
+
+// VER PAGINA PRINCIPAL MATERIA PRIMA 
+app.get('/matprima', matPrima);
 
 
 app.get('/', (req, res) => {

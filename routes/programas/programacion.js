@@ -29,13 +29,11 @@ if (fechaBusqueda) {
        fechaAnterior.setHours(fechaAnterior.getHours() -5);
        fechaAnterior.setUTCHours(0,0,0,0);
        fechaAnterior.setHours(fechaAnterior.getHours() - 24);
-       console.log(fechaAnterior);
 
         // Fecha Actual
         const fechaAuto = new Date();
         fechaAuto.setHours(fechaAuto.getHours() -5);
         fechaAuto.setUTCHours(0,0,0,0);
-        console.log(fechaAuto);
         
         // fecha mañana
        const fechaProxima = new Date();
@@ -43,17 +41,13 @@ if (fechaBusqueda) {
        fechaProxima.setUTCHours(0,0,0,0);
        fechaProxima.setHours(fechaProxima.getHours() + 24);
        
-       console.log(fechaProxima);
        
         const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
         const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
         const programacionAnterior = await Programa.find({"fecha" : fechaAnterior});
-        console.log(programacionAnterior);
         const programacion = await Programa.find({"fecha" : fechaAuto});
-        console.log(programacion);
         const programacionProxima = await Programa.find({"fecha" : fechaProxima});
-        console.log(programacionProxima);
         
         res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }
@@ -63,30 +57,33 @@ if (fechaBusqueda) {
 // INGRESAR PROGRAMAS DE RECEPCION
 
 router.post('/programacion', wrapAsync(async (req, res, next) => {
-    const nuevoPrograma = new Programa(req.body)
+    console.log(req.body)
+    const datos = req.body;
+    const fecha = datos.fecha;
+    const hora = datos.hora;
+    const fechaLlegada = fecha +'T'+ hora;
+    const llegada = new Date(fechaLlegada);
+    llegada.setHours(llegada.getHours() - 5);
+    datos.fecha = llegada;
+    delete datos.hora;
+    const nuevoPrograma = new Programa(datos)
     const nuevoLote = nuevoPrograma.lote;
     const verificarLote = await Programa.findOne({"lote" : nuevoLote});
     if (verificarLote) {
-        res.send(`Lote ya esta asignado a ${verificarLote.proveedor} piscina: ${verificarLote.piscina}`);
-    } else {
-        console.log(nuevoPrograma);
-        await nuevoPrograma.save()
-        res.redirect('/programacion'); 
-    }
+         res.send(`Lote ya esta asignado a ${verificarLote.proveedor} piscina: ${verificarLote.piscina}`);
+     } else {
+      await nuevoPrograma.save()
+      res.redirect('/programacion'); 
+     }
 }))
 
 // VER LOTE PROGRAMADO
 
 router.get('/programacion/corregir/:id', wrapAsync(async (req, res, next) => {
     const { id } = req.params;
-    console.log(id);
     const lotePrograma = await Programa.findById(id);
-    console.log(lotePrograma)
     const date = lotePrograma.fecha; 
-    // const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     const fecha =  date.toISOString().split('T')[0];
-    // console.log(fecha);
-    // console.log(llegada);
     res.render('corregir', { lotePrograma, fecha }); 
 }))
 
@@ -94,11 +91,9 @@ router.get('/programacion/corregir/:id', wrapAsync(async (req, res, next) => {
 // MODIFICAR LOTE PROGRAMADO EN DB
 router.put('/programacion/corregir/:id', wrapAsync(async (req, res, next) => {
     const { id } = req.params;
-    console.log(req.body);
     const  temp = req.body.fecha;
     const date = new Date(temp);
     req.body.fecha = date;
-    console.log(req.body);
     await Programa.findByIdAndUpdate(id, req.body, {runValidators: true, new: true, useFindAndModify: false })
     res.redirect('/programacion');   
 }))
@@ -106,7 +101,6 @@ router.put('/programacion/corregir/:id', wrapAsync(async (req, res, next) => {
 // BORRAR LOTE PROGRAMADO
 router.delete('/programacion/delete/:id', wrapAsync(async(req, res, next) => {
     const { id } = req.params;
-    console.log(id);
     await Programa.findByIdAndDelete(id)
     res.redirect('/programacion');
 }))
