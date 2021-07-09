@@ -55,8 +55,7 @@ if (fechaBusqueda) {
 
         const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
         const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
-        const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaAnterior_rango}});
-        console.log(programacion);
+        const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
         res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }
 }))

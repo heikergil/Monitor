@@ -5,32 +5,39 @@ const Programa = require('../../models/programa');
 
 
 router.get('/matprima', wrapAsync(async(req, res, next) => {
- // fecha ayer
- const fechaAnterior = new Date();
- fechaAnterior.setHours(fechaAnterior.getHours() -5);
- fechaAnterior.setUTCHours(0,0,0,0);
- fechaAnterior.setHours(fechaAnterior.getHours() - 24);
+    // fecha ayer
+    const fechaAnterior = new Date();
+    fechaAnterior.setHours(fechaAnterior.getHours() -5);
+    fechaAnterior.setUTCHours(0,0,0,0);
+    fechaAnterior.setHours(fechaAnterior.getHours() - 24);
+    const fechaAnterior_rango = new Date(fechaAnterior)
+     fechaAnterior_rango.setHours(fechaAnterior_rango.getHours() + 23,59,59);
 
-  // Fecha Actual
-  const fechaAuto = new Date();
-  fechaAuto.setHours(fechaAuto.getHours() -5);
-  fechaAuto.setUTCHours(0,0,0,0);
-  
-  // fecha mañana
- const fechaProxima = new Date();
- fechaProxima.setHours(fechaProxima.getHours() - 5);
- fechaProxima.setUTCHours(0,0,0,0);
- fechaProxima.setHours(fechaProxima.getHours() + 24);
- 
- 
-  const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-  const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
+     // Fecha Actual
+     const fechaAuto = new Date();
+     fechaAuto.setHours(fechaAuto.getHours() -5);
+     fechaAuto.setUTCHours(0,0,0,0);
+     const fechaAuto_rango = new Date(fechaAuto)
+     fechaAuto_rango.setHours(fechaAuto_rango.getHours() + 23,59,59);
+     
+     
+     
+     // fecha mañana
+    const fechaProxima = new Date();
+    fechaProxima.setHours(fechaProxima.getHours() - 5);
+    fechaProxima.setUTCHours(0,0,0,0);
+    fechaProxima.setHours(fechaProxima.getHours() + 24);
+    const fechaProxima_rango = new Date(fechaProxima)
+     fechaProxima_rango.setHours(fechaProxima_rango.getHours() + 23,59,59);
+    
+    
+     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
+     const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
-  const programacionAnterior = await Programa.find({"fecha" : fechaAnterior});
-  const programacion = await Programa.find({"fecha" : fechaAuto});
-  const programacionProxima = await Programa.find({"fecha" : fechaProxima});
-  
-  res.render('matprima', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
+     const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
+     const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
+     const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
+     res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }))
 
 
