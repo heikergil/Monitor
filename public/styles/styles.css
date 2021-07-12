@@ -50,3 +50,27 @@
 
   .llegadap { grid-area: llegadap; }
 
+  .grid-mprima {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr 1.5fr 2fr 1.5fr 2fr 2fr 2fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "itemmp proveedormp productomp cantidadmp recibidomp piscinamp lotemp llegadamp";
+  }
+  
+  .itemp { grid-area: itemmp; }
+    
+  .proveedorp { grid-area: proveedormp; }
+  
+  .productop { grid-area: productomp; }
+
+  .cantidadp { grid-area: cantidadmp; }
+
+  .recibidomp { grid-area: recibidomp; }
+
+  .piscinap { grid-area: piscinamp; }
+  
+  .lotep { grid-area: lotemp; }
+
+  .llegadap { grid-area: llegadamp; }

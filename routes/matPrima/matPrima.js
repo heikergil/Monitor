@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Programa = require('../../models/programa');
+const Ingreso = require('../../models/ingresos');
 
 
 
@@ -35,9 +36,22 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
      const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
      const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
+     
+     const lote = programacionAnterior[0]['lote'];
+     console.log(lote);
+     const ingresos = await Ingreso.find({"lote":lote})
+        ingresos.forEach(x => {
+            console.log(x);
+        });
+        
+
+
+
      const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
      const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
-     res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
+
+
+     res.render('matprima', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }))
 
 
