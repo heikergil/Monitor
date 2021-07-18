@@ -36,24 +36,43 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
      const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
      const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
+     let remitido = 0;
+        var programacionAnteriorNew = [];
+        programacionAnteriorNew.push('hello world');
+
+     programacionAnterior.forEach(async function(x) {
+
+         programacionAnteriorNew.push('HELLO WORLD BUT IN ALL CAPS');
+         
+         const lote = x.lote;
+         const ingresos = await Ingreso.find({"lote" : lote});
+         var tempObj = {};
+            ingresos.forEach(function(x) { 
+                remitido += x.remitido
+            });
+                
+                tempObj.lote = lote;
+                tempObj.proveedor = x.proveedor;
+                tempObj.cantidad = x.cantidad;
+                tempObj.piscina = x.piscina;
+                tempObj.total = remitido;
+                tempObj.fecha = x.fecha;
+                console.log(tempObj);
+                programacionAnteriorNew.push(tempObj)
+
+
+            });
+            
      
-     const lote = programacionAnterior[0]['lote'];
-     console.log(lote);
-     const ingresos = await Ingreso.find({"lote":lote})
-        const result = ingresos.map(x => {
-            x
-        }); 
-
-        console.log(result);
-        
-
+            console.log('BUENAS BUENAS');
+            console.log(programacionAnteriorNew);
 
 
      const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
      const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
 
 
-     res.render('matprima', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
+res.render('matprima', { programacion, programacionAnterior,programacionAnteriorNew, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }))
 
 
