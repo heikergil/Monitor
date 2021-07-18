@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Ingreso = require('./models/ingresos');
-const { DateTime } = require("luxon");
+const Programa = require('./models/programa');
 
 // connection to mongoDB with mongoose
 mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: true, useUnifiedTopology: true})
@@ -12,159 +12,71 @@ mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: tru
     console.log(err)
 });
 
-
-
-const date = new Date();
-    const dia = new Date(date)
-    dia.setDate(dia.getDate() - 1)
-    console.log(dia);
-const seedIngresos = [
-    {
-        lote: 1236023,
-        proveedor: 'wijuga',
-        piscina: '56',
-        fecha: dia,
-        
-        numeroBines: 8,
-        remitido: 7200
-    }
-    ,
-    // {
-    //     lote: 1237000,
-    //     proveedor: 'wijuga',
-    //     piscina: '0E',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 9000
-    // },
-    // {
-    //     lote: 1237000,
-    //     proveedor: 'wijuga',
-    //     piscina: '0E',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 9000
-    // },
-    // {
-    //     lote: 1236023,
-    //     proveedor: 'wijuga',
-    //     piscina: '56',
-    //     fecha: dia,
-        
-    //     numeroBines: 8,
-    //     remitido: 7200
-    // },
-    // {
-    //     lote: 1236023,
-    //     proveedor: 'wijuga',
-    //     piscina: '56',
-    //     fecha: dia,
-        
-    //     numeroBines: 8,
-    //     remitido: 7200
-    // },
-    // {
-    //     lote: 1237040,
-    //     proveedor: 'produmar',
-    //     piscina: '4-04',
-    //     fecha: dia,
-        
-    //     numeroBines: 8,
-    //     remitido: 9000
-    // },
-    // {
-    //     lote: 1237040,
-    //     proveedor: 'produmar',
-    //     piscina: '4-04',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 9000
-    // },
-    // {
-    //     lote: 1237041,
-    //     proveedor: 'produmar',
-    //     piscina: '5-05',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 9000
-    // },
-    // {
-    //     lote: 1237041,
-    //     proveedor: 'produmar',
-    //     piscina: '5-05',
-    //     fecha: dia,
-        
-    //     numeroBines: 8,
-    //     remitido: 8000
-    // },
-    // {
-    //     lote: 1237050,
-    //     proveedor: 'cachugran',
-    //     piscina: '99',
-    //     fecha: dia,
-        
-    //     numeroBines: 8,
-    //     remitido: 7200
-    // },
-    // {
-    //     lote: 1237010,
-    //     proveedor: 'PUNA',
-    //     piscina: '808',
-    //     fecha: dia,
-        
-    //     numeroBines: 9,
-    //     remitido: 9000
-    // },
-    // {
-    //     lote: 1237010,
-    //     proveedor: 'PUNA',
-    //     piscina: '808',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 1000
-    // },
-    // {
-    //     lote: 1237010,
-    //     proveedor: 'PUNA',
-    //     piscina: '808',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 1000
-    // },
-    // {
-    //     lote: 1237010,
-    //     proveedor: 'PUNA',
-    //     piscina: '808',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 1000
-    // },
-    // {
-    //     lote: 1237010,
-    //     proveedor: 'PUNA',
-    //     piscina: '808',
-    //     fecha: dia,
-        
-    //     numeroBines: 10,
-    //     remitido: 1000
-    // }
+// {
+//     _id: 60eba2c3f2c4353e205a281b,
+//     proveedor: 'Produmar',
+//     producto: 'ENTERO',
+//     piscina: '30',
+//     lote: 126987,
+//     cantidad: 20000,
+//     fecha: 2021-07-10T10:00:00.000Z,
+//     __v: 0
+//   }
 
 
 
-]
+
+ async function seed() {
+    
+    let lote = 1230000
+    const dateToday = new Date();
+        dateToday.setHours(dateToday.getHours() -5);
+        dateToday.setUTCHours(0,0,0,0);
+        dateToday.setDate(dateToday.getDate() - 1 );
+    
+
+for (let i = 1; i <= 12; i++ ) {
+
+        
+    
+    let seedPrograma = {
+        proveedor: 'Produmar',
+        producto: 'ENTERO',
+        piscina: '30',
+        lote: lote,
+        cantidad: 70000,
+        fecha: dateToday
+        }
+        
+        const programa = new Programa(seedPrograma);
+        await programa.save()
+
+            for (let x =0; x <= 4; x++) {
+
+                let seedIngreso = {
+                    proveedor: 'Produmar',
+                    piscina: '30',
+                    lote: lote,
+                    piscina: 'test',
+                    numeroBines: 10,
+                    remitido:10000,
+                    fecha: dateToday
+                    }
+        
+            const nuevoIngreso = new Ingreso(seedIngreso)
+            await nuevoIngreso.save()
+
+            }
+
+         lote += 1
+        
+        dateToday.setDate(dateToday.getDate() + 1 );
+        console.log(dateToday)
+}
+
+}
 
 
-Ingreso.insertMany(seedIngresos)
-    .then(res => {
-        console.log(res)
-    })
-    .catch(e => {
-        console.log(e)
-    })
+
+
+seed();

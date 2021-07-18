@@ -59,18 +59,18 @@
       "itemmp proveedormp productomp cantidadmp recibidomp piscinamp lotemp llegadamp";
   }
   
-  .itemp { grid-area: itemmp; }
+  .itemmp { grid-area: itemmp; }
     
-  .proveedorp { grid-area: proveedormp; }
+  .proveedormp { grid-area: proveedormp; }
   
-  .productop { grid-area: productomp; }
+  .productomp { grid-area: productomp; }
 
-  .cantidadp { grid-area: cantidadmp; }
+  .cantidadmp { grid-area: cantidadmp; }
 
-  .recibidomp { grid-area: recibidomp; }
+  .recibidommp { grid-area: recibidomp; }
 
-  .piscinap { grid-area: piscinamp; }
+  .piscinamp { grid-area: piscinamp; }
   
-  .lotep { grid-area: lotemp; }
+  .lotemp { grid-area: lotemp; }
 
-  .llegadap { grid-area: llegadamp; }
+  .llegadamp { grid-area: llegadamp; }

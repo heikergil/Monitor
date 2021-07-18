@@ -40,9 +40,11 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
      const lote = programacionAnterior[0]['lote'];
      console.log(lote);
      const ingresos = await Ingreso.find({"lote":lote})
-        ingresos.forEach(x => {
-            console.log(x);
-        });
+        const result = ingresos.map(x => {
+            x
+        }); 
+
+        console.log(result);
         
 
 
