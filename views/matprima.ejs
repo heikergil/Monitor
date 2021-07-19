@@ -6,7 +6,7 @@
 <h1 class="text-center my-5 ">MP - BRISAS  </h1>
 
 <!-- PROGRAMA DEL DIA ANTERIOR -->
-<%if (typeof programacionAnterior === 'undefined') {}else {  %>
+<%if (typeof programacionAnteriorNew === 'undefined') {}else {  %>
     <div class="grid-mprima w-100 mt-5">
         <span class="itemmp border border-dark py-1  text-center">item</span>
         <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
@@ -23,11 +23,11 @@
 
     
 
-    <%for (let programa of programacionAnterior) {%>
+    <%for (let programa of programacionAnteriorNew) {%>
         <% 
         const date = programa.fecha;
         const fechay = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear(); 
-    
+        const llegaday = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         
         itemy += 1
         %> <div class="grid-mprima w-100">
@@ -35,10 +35,10 @@
             <span class="proveedormp border border-dark py-1 text-center"><%=programa.proveedor%></span>
             <span class="productomp border border-dark py-1  text-center" ><%=programa.producto%></span>
             <span class="cantidadmp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="recibidommp border border-dark py-1  text-center">Recibido</span>
+            <span class="recibidommp border border-dark py-1  text-center"><%= programa.total %> </span>
             <span class="piscinamp border border-dark py-1  text-center" ><%=programa.piscina%></span>
             <span class="lotemp border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechamp border border-dark py-1  text-center" ></span>
+            <span class="llegadamp border border-dark py-1  text-center"><%= llegaday %> </span>
         </div>
        
         <% } %> 
@@ -58,10 +58,11 @@
     <% 
     var item = 0;
     %> 
-    <%for (let programa of programacion) {%>
+    <%for (let programa of programacionNew) {%>
         <% 
         const date = programa.fecha;
         const fecha = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
+        const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
             
         
         item += 1
@@ -70,16 +71,16 @@
             <span class="proveedormp border border-dark py-1 text-center"><%=programa.proveedor%></span>
             <span class="productomp border border-dark py-1  text-center" ><%=programa.producto%></span>
             <span class="cantidadmp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="recibidommp border border-dark py-1  text-center">Recibido</span>
+            <span class="recibidommp border border-dark py-1  text-center"><%= programa.total %> </span>
             <span class="piscinamp border border-dark py-1  text-center" ><%=programa.piscina%></span>
             <span class="lotemp border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechamp border border-dark py-1  text-center" ></span>
+            <span class="llegadamp border border-dark py-1  text-center"><%= llegada %> </span>
         </div>
        
         <% } %> 
 
     <!-- PROGRAMA PROXIMO DIA -->
-    <%if (typeof programacionProxima === 'undefined') {}else {  %>
+    <%if (typeof programacionProximaNew === 'undefined') {}else {  %>
     <div class="grid-mprima w-100 mt-5">
         <span class="itemmp border border-dark py-1  text-center">item</span>
         <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
@@ -93,10 +94,11 @@
     <% 
     var itemx = 0;
     %> 
-    <%for (let programa of programacionProxima) {%>
+    <%for (let programa of programacionProximaNew) {%>
         <% 
         const date = programa.fecha;
         const fechax = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
+        const llegadampp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     
         
         itemx += 1
@@ -105,10 +107,10 @@
             <span class="proveedormp border border-dark py-1 text-center"><%=programa.proveedor%></span>
             <span class="productomp border border-dark py-1  text-center" ><%=programa.producto%></span>
             <span class="cantidadmp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="recibidommp border border-dark py-1  text-center">Recibido</span>
+            <span class="recibidommp border border-dark py-1  text-center"><%= programa.total %></span>
             <span class="piscinamp border border-dark py-1  text-center" ><%=programa.piscina%></span>
             <span class="lotemp border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechamp border border-dark py-1  text-center" ></span>
+            <span class="llegadamp border border-dark py-1  text-center"><%= llegadampp %> </span>
         </div>
        
         <% } %> 

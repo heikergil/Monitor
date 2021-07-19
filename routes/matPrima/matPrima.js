@@ -36,43 +36,109 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
      const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
      const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
-     let remitido = 0;
-        var programacionAnteriorNew = [];
-        programacionAnteriorNew.push('hello world');
+        let remitidoy = 0;
+        let programacionAnteriorNew = [];
+ 
+            const forLoopy = async _ => {
+              
+                for (let programa of programacionAnterior) {
+                    const lote = programa.lote;
+                    const ingresos = await Ingreso.find({"lote" : lote});
 
-     programacionAnterior.forEach(async function(x) {
+                    let tempObj = {};
 
-         programacionAnteriorNew.push('HELLO WORLD BUT IN ALL CAPS');
-         
-         const lote = x.lote;
-         const ingresos = await Ingreso.find({"lote" : lote});
-         var tempObj = {};
-            ingresos.forEach(function(x) { 
-                remitido += x.remitido
-            });
+                    ingresos.forEach(function(x) { 
+                        remitidoy += x.remitido
+                    });
+
+                    tempObj.lote = lote;
+                    tempObj.proveedor = programa.proveedor;
+                    tempObj.producto = programa.producto;
+                    tempObj.cantidad = programa.cantidad;
+                    tempObj.piscina = programa.piscina;
+                    tempObj.total = remitidoy;
+                    tempObj.fecha = programa.fecha;
+                    programacionAnteriorNew.push(tempObj);
+                }
                 
-                tempObj.lote = lote;
-                tempObj.proveedor = x.proveedor;
-                tempObj.cantidad = x.cantidad;
-                tempObj.piscina = x.piscina;
-                tempObj.total = remitido;
-                tempObj.fecha = x.fecha;
-                console.log(tempObj);
-                programacionAnteriorNew.push(tempObj)
-
-
-            });
             
-     
-            console.log('BUENAS BUENAS');
-            console.log(programacionAnteriorNew);
+              }
 
+              await forLoopy();
+              console.log(programacionAnteriorNew);
 
      const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
+    
+     let remitido = 0;
+     let programacionNew = [];
+
+         const forLoop = async _ => {
+           
+             for (let programa of programacion) {
+                 const lote = programa.lote;
+                 const ingresos = await Ingreso.find({"lote" : lote});
+
+                 let tempObj = {};
+
+                 ingresos.forEach(function(x) { 
+                     remitido += x.remitido
+                 });
+
+                 tempObj.lote = lote;
+                 tempObj.proveedor = programa.proveedor;
+                 tempObj.producto = programa.producto;
+                 tempObj.cantidad = programa.cantidad;
+                 tempObj.piscina = programa.piscina;
+                 tempObj.total = remitido;
+                 tempObj.fecha = programa.fecha;
+                 programacionNew.push(tempObj);
+             }
+             
+         
+           }
+
+           await forLoop();
+
+
+
+
+
+
      const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
 
 
-res.render('matprima', { programacion, programacionAnterior,programacionAnteriorNew, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
+
+     let remitidoP = 0;
+     let programacionProximaNew = [];
+
+         const forLoopP = async _ => {
+           
+             for (let programa of programacionProxima) {
+                 const lote = programa.lote;
+                 const ingresos = await Ingreso.find({"lote" : lote});
+
+                 let tempObj = {};
+
+                 ingresos.forEach(function(x) { 
+                    remitidoP += x.remitido
+                 });
+
+                 tempObj.lote = lote;
+                 tempObj.proveedor = programa.proveedor;
+                 tempObj.producto = programa.producto;
+                 tempObj.cantidad = programa.cantidad;
+                 tempObj.piscina = programa.piscina;
+                 tempObj.total = remitidoP;
+                 tempObj.fecha = programa.fecha;
+                 programacionProximaNew.push(tempObj);
+             }
+             
+         
+           }
+
+           await forLoopP();
+
+res.render('matprima', { programacionNew, programacionAnterior,programacionAnteriorNew, programacionProximaNew, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }))
 
 

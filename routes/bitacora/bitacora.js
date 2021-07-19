@@ -56,6 +56,7 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
      fechaProxima.setHours(fechaProxima.getHours() - 5);
      fechaProxima.setUTCHours(0,0,0,0);
      fechaProxima.setHours(fechaProxima.getHours() + 24);
+     fechaProxima.setHours(fechaProxima.getHours() + 23,59,59);
     // Fecha busqueda programa del dia
     
     const fechaPrograma = new Date();
@@ -64,6 +65,7 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
     const ingresos = await Ingreso.find({"fecha" : {$gte: autoPlus, $lte: fechaAuto}});
+    console.log(fechaAnterior, fechaProxima);
     const lotes = await Programa.find({"fecha" : {$gte: fechaAnterior, $lte: fechaProxima} })
     console.log(lotes);
     res.render('bitacora', { lotes, ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
