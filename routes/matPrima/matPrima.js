@@ -29,26 +29,32 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
     fechaProxima.setUTCHours(0,0,0,0);
     fechaProxima.setHours(fechaProxima.getHours() + 24);
     const fechaProxima_rango = new Date(fechaProxima)
-     fechaProxima_rango.setHours(fechaProxima_rango.getHours() + 23,59,59);
+    fechaProxima_rango.setHours(fechaProxima_rango.getHours() + 23,59,59);
     
     
      const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
      const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
      const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
-        let remitidoy = 0;
+        
         let programacionAnteriorNew = [];
  
             const forLoopy = async _ => {
               
                 for (let programa of programacionAnterior) {
+                    let remitidoy = 0;
                     const lote = programa.lote;
                     const ingresos = await Ingreso.find({"lote" : lote});
 
                     let tempObj = {};
-
+                    tempObj.llegada = new Date(0);
+                    let llegada = tempObj.llegada;
                     ingresos.forEach(function(x) { 
                         remitidoy += x.remitido
+                        let compare = x.fecha;
+                        if (llegada.getTime() >= compare.getTime()) {
+                            tempObj.llegada = compare;
+                        }
                     });
 
                     tempObj.lote = lote;
@@ -65,23 +71,33 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
               }
 
               await forLoopy();
-              console.log(programacionAnteriorNew);
 
      const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
+     console.log(programacion);
     
-     let remitido = 0;
      let programacionNew = [];
 
          const forLoop = async _ => {
-           
+            
              for (let programa of programacion) {
+                let tempObj = {};
                  const lote = programa.lote;
                  const ingresos = await Ingreso.find({"lote" : lote});
 
-                 let tempObj = {};
+                 let remitido = 0;
+                 tempObj.llegada = new Date(0);
+                 let llegada = tempObj.llegada;
 
                  ingresos.forEach(function(x) { 
                      remitido += x.remitido
+                            
+                     let compare = x.fecha;
+
+                     if (llegada.getTime() <= compare.getTime()) {
+                         llegada = compare;
+                     }
+                     tempObj.llegada= llegada;
+                     console.log(tempObj.llegada);
                  });
 
                  tempObj.lote = lote;
@@ -108,12 +124,13 @@ router.get('/matprima', wrapAsync(async(req, res, next) => {
 
 
 
-     let remitidoP = 0;
+    
      let programacionProximaNew = [];
 
          const forLoopP = async _ => {
            
              for (let programa of programacionProxima) {
+                let remitidoP = 0;
                  const lote = programa.lote;
                  const ingresos = await Ingreso.find({"lote" : lote});
 
