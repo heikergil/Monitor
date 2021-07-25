@@ -33,17 +33,19 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     
     } else {
     // gets current date automatically
-    const fechaAuto = new Date();
+    const hora_actual = new Date();
+    hora_actual.setHours(hora_actual.getHours() - 5)
     // set to 5 hours to ovoid problem with the local time zone.
     // after 19:00 new "ingresos" are logged with next day date because the server transforms dates to UTC (adding 5 hours)
     // Ecuador local Time is -5 GMT
-    const autoPlus = new Date(fechaAuto);
-    autoPlus.setDate(autoPlus.getDate() - 1)
+    const menos24horas = new Date(hora_actual);
+    menos24horas.setDate(menos24horas.getDate() - 1)
     // autoPlus.setUTCHours(-24,0,0,0);
     
 
 
-     // fecha ayer
+     // fecha ayer º
+
      const fechaAnterior = new Date();
      fechaAnterior.setHours(fechaAnterior.getHours() -5);
      fechaAnterior.setUTCHours(0,0,0,0);
@@ -64,11 +66,12 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     fechaPrograma.setUTCHours(0,0,0,0);
     
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-    const ingresos = await Ingreso.find({"fecha" : {$gte: autoPlus, $lte: fechaAuto}});
-    console.log(fechaAnterior, fechaProxima);
+    const ingresos = await Ingreso.find({"fecha" : {$gte: menos24horas, $lte: hora_actual}});
+    console.log('menos 24 horas:', menos24horas);
+    console.log('hora actual:', hora_actual)
+    console.log(ingresos)
     const lotes = await Programa.find({"fecha" : {$gte: fechaAnterior, $lte: fechaProxima} })
-    console.log(lotes);
-    res.render('bitacora', { lotes, ingresos, fechaBusqueda: fechaAuto, fecha: fechaAuto.toLocaleDateString('en-GB', options)});
+    res.render('bitacora', { lotes, ingresos, fechaBusqueda: hora_actual, fecha: hora_actual.toLocaleDateString('en-GB', options)});
     }
     
      
@@ -97,10 +100,12 @@ router.post('/new', wrapAsync(async (req, res, next) => {
         res.redirect('bitacora'); 
     } else {
         // new ingreso with current date in UTC (+5 hours Ecuador local time)
-        var date = new Date(); 
+        var date = new Date();
+
         nuevoIngreso.fecha = date;
-        await nuevoIngreso.save()
-        res.redirect('bitacora')  
+        date.setHours(date.getHours() -5);
+        await nuevoIngreso.save();
+        res.redirect('bitacora');  
     }
    
 }))
@@ -156,12 +161,12 @@ router.get('/lote/:lote', wrapAsync( async (req, res, next) => {
     
 const { lote } = req.params;
 const ingresos = await Ingreso.find({"lote":lote})
-var totalRemitido = 0;
-var totalBines = 0;
-    for (let ingreso of ingresos) {
-        totalRemitido += ingreso.remitido;
-        totalBines += ingreso.numeroBines
-        }
+const bines = ingresos.map(x => x.numeroBines)
+const totalBines = bines.reduce((acc,current) => {return acc + current})
+const libras = ingresos.map(x => x.remitido);
+const totalRemitido = libras.reduce((acc,current) => {return acc + current});
+
+
 res.render('lote', { ingresos, totalRemitido, totalBines, lote })
 
 }))

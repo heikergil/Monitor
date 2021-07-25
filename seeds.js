@@ -31,11 +31,11 @@ mongoose.connect('mongodb://localhost:27017/monitor-test', {useNewUrlParser: tru
     let lote = 1230000
     const dateToday = new Date();
         dateToday.setHours(dateToday.getHours() -5);
-        dateToday.setUTCHours(0,0,0,0);
+        // dateToday.setUTCHours(0,0,0,0);
         dateToday.setDate(dateToday.getDate() - 1 );
     
 
-for (let i = 1; i <= 12; i++ ) {
+for (let i = 1; i <= 6; i++ ) {
 
         
     
@@ -70,7 +70,7 @@ for (let i = 1; i <= 12; i++ ) {
 
          lote += 1
         
-        dateToday.setDate(dateToday.getDate() + 1 );
+        dateToday.setHours(dateToday.getHours() + 12 );
         console.log(dateToday)
 }
 

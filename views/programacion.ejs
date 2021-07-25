@@ -93,7 +93,10 @@
     <%for (let programa of programacionAnterior) {%>
         <% 
         const date = programa.fecha;
-        const fechay = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear(); 
+        const fechay = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear() 
+        + " " + date.getUTCHours() + ':'+ date.getUTCMinutes();
+        
+        
     
         
         itemy += 1

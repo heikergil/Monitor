@@ -67,8 +67,8 @@
 <%for (let ingreso of ingresos) {%>
     <% 
     const date = ingreso.fecha;
-    const fecha = ingreso.fecha.toLocaleDateString(); 
-    const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const fecha = date.getUTCDate() + '/' + date.getUTCMonth() + "/" + date.getUTCFullYear();
+    const llegada = date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
     
     item += 1
     %> <div class="grid-ingreso w-100">
