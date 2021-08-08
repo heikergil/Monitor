@@ -3,56 +3,77 @@
 <h1 class="text-center my-5 ">INGRESO PROGRAMA - BRISAS  <%=fechaIngreso %> </h1>
 
 <div class="container my-3">
-    <form class="h-25 d-flex" action="/programacion" method="get">
-        <input class="form-control w-25" type="date" id="fechaBusqueda" name="fechaBusqueda">
+    <form class="h-25 d-flex needs-validation" action="/programacion" method="get" novalidate>
+        <input class="form-control w-25" type="date" id="fechaBusqueda" name="fechaBusqueda" required>
         <button class="btn btn-success mx-3">Fecha</button>
         </form>
 </div>
 
 
+
+<div class="container-md bg-light">
 <h2 class="my-3 text-center">Ingresar programa</h2>
 
-    <form class="d-flex justify-content-sm-start align-content-between flex-sm-wrap" action="/programacion" method="post">
+    <form class="d-flex justify-content-sm-start align-content-between flex-sm-wrap needs-validation" action="/programacion" method="post" novalidate>
     
     
     <label class="m-2" for="proveedor">
-        <input class="form-control" type="text" name="proveedor" placeholder="Proveedor">
+        <input class="form-control" type="text" name="proveedor" placeholder="Proveedor" required>
+        <div class="invalid-feedback">
+            Ingrese nombre de proveedor
+        </div>
     </label>
 
     <label class="m-2" for="producto">
-        <input class="form-control" type="text" name="producto" placeholder="Producto">
+        <input class="form-control" type="text" name="producto" placeholder="Producto" required>
+        <div class="invalid-feedback">
+            Ingrese tipo de producto (ENTERO, X/D)
+        </div>
     </label>
 
     <label class="m-2" for="piscina">
-        <input class="form-control" type="text" name="piscina" placeholder="Piscina">
+        <input class="form-control" type="text" name="piscina" placeholder="Piscina" required>
+        <div class="invalid-feedback">
+            Ingrese identificacion de piscina
+        </div>
     </label>
 
     <label class="m-2" for="lote">
-        <input class="form-control" type="number" name="lote" placeholder="Lote">
+        <input class="form-control" type="number" name="lote" placeholder="Lote" required>
+        <div class="invalid-feedback">
+            Ingrese numero de lote
+        </div>
     </label>
 
     <label class="m-2" for="cantidad">
-        <input class="form-control" type="number" name="cantidad" placeholder="Cantidad">
+        <input class="form-control" type="number" name="cantidad" placeholder="Cantidad" required>
+        <div class="invalid-feedback">
+            Ingrese libras proyectadas a recibir
+        </div>
     </label>  
 
     <label class="m-2" for="fecha">
-        <input class="form-control" type="date" name="fecha" value="<%= fechaIngreso %>" >  
+        <input class="form-control" type="date" name="fecha" value="<%= fechaIngreso %>" required>
+        <div class="invalid-feedback">
+            Ingrese fecha de llegada
+        </div>  
     </label>
 
     <label class="m-2" for="hora" >
-        <select class="form-select w-100 h-100" name="hora">
+        <select class="form-select w-100 h-100" name="hora" required>
             <option value="00:00">00:00</option>
             <option value="01:00">01:00</option>
             <option value="02:00">02:00</option>
             <option value="03:00">03:00</option>
+            <option value="04:00">03:00</option>
             <option value="05:00">04:00</option>
             <option value="06:00">06:00</option>
             <option value="07:00">07:00</option>
             <option value="08:00">09:00</option>
+            <option value="09:00">09:00</option>
             <option value="10:00">10:00</option>
             <option value="11:00">11:00</option>
             <option value="12:00">12:00</option>
-            <option value="13:00">13:00</option>
             <option value="13:00">13:00</option>
             <option value="14:00">14:00</option>
             <option value="15:00">15:00</option>
@@ -64,10 +85,16 @@
             <option value="21:00">21:00</option>
             <option value="22:00">22:00</option>
             <option value="23:00">23:00</option>
-        </select>  
+        </select>
+        <div class="invalid-feedback">
+            Ingrese hora de llegada
+        </div>  
     </label>
 
     <button type="submit" class="btn btn-primary m-2 jend">Programar</button>
+</div>
+
+
     
     <!-- programacion, programacionAnterior, programacionProxima, -->
 
@@ -94,7 +121,7 @@
         <% 
         const date = programa.fecha;
         const fechay = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear() 
-        + " " + date.getUTCHours() + ':'+ date.getUTCMinutes();
+        + " " + ("0" + date.getUTCHours()).slice(-2) + ':'+ ("0" + date.getUTCMinutes()).slice(-2);
         
         
     
@@ -129,7 +156,8 @@
     <%for (let programa of programacion) {%>
         <% 
         const date = programa.fecha;
-        const fecha = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
+        const fecha = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear() 
+        + " " + ("0" + date.getUTCHours()).slice(-2) + ':'+ ("0" + date.getUTCMinutes()).slice(-2);
             
         
         item += 1
@@ -162,7 +190,8 @@
     <%for (let programa of programacionProxima) {%>
         <% 
         const date = programa.fecha;
-        const fechax = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
+        const fechax = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear() 
+        + " " + ("0" + date.getUTCHours()).slice(-2) + ':'+ ("0" + date.getUTCMinutes()).slice(-2);
     
         
         itemx += 1
