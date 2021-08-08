@@ -1,12 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Programa = require('../../models/programa');
-<<<<<<< HEAD
-const paddedDates = require('../utils/paddedDates');
-=======
-const catchAsync = require("../../utils/catchAsync")
+const catchAsync = require('../../utils/catchAsync');
 
->>>>>>> d25e56e47aa31297254040374564d7cfbab1e3e9
 
 
 // VER PROGRAMAS DE RECEPCION
