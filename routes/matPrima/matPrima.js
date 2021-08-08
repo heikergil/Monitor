@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Programa = require("../../models/programa");
-const Ingreso = require("../../models/ingresos");
+const returnMateriaPrima = require("./helper");
 
 router.get(
   "/matprima",
@@ -36,138 +36,21 @@ router.get(
     const programacionAnterior = await Programa.find({
       fecha: { $gte: fechaAnterior, $lte: fechaAnterior_rango },
     });
-
-    let programacionAnteriorNew = [];
-
-    const forLoopy = async (_) => {
-      for (let programa of programacionAnterior) {
-        let remitidoy = 0;
-        const lote = programa.lote;
-        const ingresos = await Ingreso.find({ lote: lote });
-
-        let tempObj = {};
-        
-        
-
-        ingresos.forEach(function (x) {
-          remitidoy += x.remitido;
-                  });
-
-                  const horaIngresos = ingresos.map(x => (x.fecha).getTime())
-                  const primerIngreso = horaIngresos.reduce(
-                      (acc,curr) => 
-                      {
-                         return new Date(Math.min(curr, acc));
-                      }
-                      )
-                  
-
-        
-
-        tempObj.lote = lote;
-        tempObj.proveedor = programa.proveedor;
-        tempObj.producto = programa.producto;
-        tempObj.cantidad = programa.cantidad;
-        tempObj.piscina = programa.piscina;
-        tempObj.total = remitidoy;
-        tempObj.primerIngreso = primerIngreso;
-        tempObj.fecha = programa.fecha;
-        programacionAnteriorNew.push(tempObj);
-      }
-    };
-
-    await forLoopy();
-
-   
+    const programacionAnteriorNew = await returnMateriaPrima(programacionAnterior);
+    
     const programacion = await Programa.find({
       fecha: { $gte: fechaAuto, $lte: fechaAuto_rango },
     });
-
-    let programacionNew = [];
-
-    const forLoop = async (_) => {
-      for (let programa of programacion) {
-        let tempObj = {};
-        const lote = programa.lote;
-        const ingresos = await Ingreso.find({ lote: lote });
-
-        let remitido = 0;
-        
-        ingresos.forEach(function (x) {
-          remitido += x.remitido;
-        });
-
-        const horaIngresos = ingresos.map(x => (x.fecha).getTime())
-        const primerIngreso = horaIngresos.reduce(
-            (acc,curr) => 
-            {
-               return new Date(Math.min(curr, acc));
-            }
-            )
-
-
-       
-
-        tempObj.lote = lote;
-        tempObj.proveedor = programa.proveedor;
-        tempObj.producto = programa.producto;
-        tempObj.cantidad = programa.cantidad;
-        tempObj.piscina = programa.piscina;
-        tempObj.total = remitido;
-        tempObj.fecha = programa.fecha;
-        tempObj.primerIngreso = primerIngreso;
-        console.log(primerIngreso);
-        programacionNew.push(tempObj);
-      }
-    };
-
-    await forLoop();
+    const  programacionNew = await returnMateriaPrima(programacion);
 
 
     const programacionProxima = await Programa.find({
       fecha: { $gte: fechaProxima, $lte: fechaProxima_rango },
     });
+    const programacionProximaNew = await returnMateriaPrima(programacionProxima);
 
-    let programacionProximaNew = [];
+    
 
-    const forLoopP = async (_) => {
-      for (let programa of programacionProxima) {
-        let remitidoP = 0;
-        const lote = programa.lote;
-        const ingresos = await Ingreso.find({ lote: lote });
-
-        let tempObj = {};
-
-        ingresos.forEach(function (x) {
-          remitidoP += x.remitido;
-        });
-
-        const horaIngresos = ingresos.map(x => (x.fecha).getTime())
-        console.log('holis', horaIngresos);
-        const primerIngreso = horaIngresos.reduce(
-            (acc,curr) => 
-            {
-               return new Date(Math.min(curr, acc));
-            }
-            )
-
-
-        console.log('HOLA', primerIngreso);
-
-        tempObj.lote = lote;
-        tempObj.proveedor = programa.proveedor;
-        tempObj.producto = programa.producto;
-        tempObj.cantidad = programa.cantidad;
-        tempObj.piscina = programa.piscina;
-        tempObj.total = remitidoP;
-        tempObj.fecha = programa.fecha;
-        tempObj.primerIngreso = primerIngreso;
-        console.log(tempObj);
-        programacionProximaNew.push(tempObj);
-      }
-    };
-
-    await forLoopP();
 
     res.render("matprima", {
       programacionNew,

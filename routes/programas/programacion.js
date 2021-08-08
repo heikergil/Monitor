@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Programa = require('../../models/programa');
+const paddedDates = require('../utils/paddedDates');
 
 function wrapAsync(fn) {
     return function (req, res, next) {
@@ -54,8 +55,11 @@ if (fechaBusqueda) {
         const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
         const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
+        console.log(programacionAnterior)
         const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
+        console.log(programacion)
         const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
+        console.log(programacionProxima);
         res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }
 }))
@@ -66,12 +70,16 @@ if (fechaBusqueda) {
 router.post('/programacion', wrapAsync(async (req, res, next) => {
     console.log(req.body)
     const datos = req.body;
+    console.log(datos);
+
     const fecha = datos.fecha;
     const hora = datos.hora;
     const fechaLlegada = fecha +'T'+ hora;
+    
     const llegada = new Date(fechaLlegada);
     llegada.setHours(llegada.getHours() - 5);
     datos.fecha = llegada;
+    console.log(datos.fecha);
     delete datos.hora;
     const nuevoPrograma = new Programa(datos)
     const nuevoLote = nuevoPrograma.lote;

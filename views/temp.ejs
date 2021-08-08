@@ -1,0 +1,104 @@
+<!-- PROGRAMA ACTUAL -->
+<div class="grid-mprima w-100 mt-5">
+    <span class="itemmp border border-dark py-1 text-center">item</span>
+    <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
+    <span class="productomp border border-dark py-1 text-center">Producto</span>
+    <span class="cantidadmp border border-dark py-1 text-center">Cantidad</span>
+    <span class="recibidommp border border-dark py-1 text-center">Recibido</span>
+    <span class="piscinamp border border-dark py-1 text-center">Piscina</span>
+    <span class="lotemp border border-dark py-1 text-center">Lote</span>
+    <span class="llegadamp border border-dark py-1 text-center"
+      >hora llegada planta</span
+    >
+  </div>
+  <% var item = 0; %> <%for (let programa of programacionNew) {%> <% const date =
+  programa.fecha; const fecha = date.getUTCDate() + '-' + (date.getUTCMonth()+1) +
+  '-' + date.getUTCFullYear(); const llegada = date.getHours() + ":" +
+  date.getMinutes() + ":" + date.getSeconds(); item += 1 
+  const primerIngreso = programa.primerIngreso;
+  
+  const primerIngresoFecha = primerIngreso.getUTCHours() + ':' + primerIngreso.getUTCMinutes() + ':' + primerIngreso.getUTCSeconds();
+  %>
+  <div class="grid-mprima w-100">
+    <span class="itemmp border border-dark py-1 text-center"
+      ><a href="/programacion/corregir/<%=programa._id%>"><%=item%></a></span
+    >
+    <span class="proveedormp border border-dark py-1 text-center"
+      ><%=programa.proveedor%></span
+    >
+    <span class="productomp border border-dark py-1 text-center"
+      ><%=programa.producto%></span
+    >
+    <span class="cantidadmp border border-dark py-1 text-center"
+      ><%=programa.cantidad%></span
+    >
+    <span class="recibidommp border border-dark py-1 text-center"
+      ><%= programa.total %>
+    </span>
+    <span class="piscinamp border border-dark py-1 text-center"
+      ><%=programa.piscina%></span
+    >
+    <span class="lotemp border border-dark py-1 text-center"
+      ><%=programa.lote%></span
+    >
+    <span class="llegadamp border border-dark py-1 text-center"
+      ><%= primerIngresoFecha %>
+    </span>
+  </div>
+  
+  <% } %>
+  
+  <!-- PROGRAMA PROXIMO DIA -->
+  <%if (typeof programacionProximaNew === 'undefined') {}else { %>
+  <div class="grid-mprima w-100 mt-5">
+    <span class="itemmp border border-dark py-1 text-center">item</span>
+    <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
+    <span class="productomp border border-dark py-1 text-center">Producto</span>
+    <span class="cantidadmp border border-dark py-1 text-center">Cantidad</span>
+    <span class="recibidommp border border-dark py-1 text-center">Recibido</span>
+    <span class="piscinamp border border-dark py-1 text-center">Piscina</span>
+    <span class="lotemp border border-dark py-1 text-center">Lote</span>
+    <span class="llegadamp border border-dark py-1 text-center"
+      >hora llegada planta</span
+    >
+  </div>
+  <% var itemx = 0; %> <%for (let programa of programacionProximaNew) {%> <% 
+  const date = programa.fecha; 
+  const fechax = date.getUTCDate() + '-' +
+  (date.getUTCMonth()+1) + '-' + date.getUTCFullYear();
+  
+  itemx += 1;
+  
+  const primerIngreso = programa.primerIngreso;
+  
+  const primerIngresoFecha = primerIngreso.getUTCHours() + ':' + primerIngreso.getUTCMinutes() + ':' + primerIngreso.getUTCSeconds();
+  %>
+  <div class="grid-mprima w-100">
+    <span class="itemmp border border-dark py-1 text-center"
+      ><a href="/programacion/corregir/<%=programa._id%>"><%=itemx%></a></span
+    >
+    <span class="proveedormp border border-dark py-1 text-center"
+      ><%=programa.proveedor%></span
+    >
+    <span class="productomp border border-dark py-1 text-center"
+      ><%=programa.producto%></span
+    >
+    <span class="cantidadmp border border-dark py-1 text-center"
+      ><%=programa.cantidad%></span
+    >
+    <span class="recibidommp border border-dark py-1 text-center"
+      ><%= programa.total %></span
+    >
+    <span class="piscinamp border border-dark py-1 text-center"
+      ><%=programa.piscina%></span
+    >
+    <span class="lotemp border border-dark py-1 text-center"
+      ><%=programa.lote%></span
+    >
+    <span class="llegadamp border border-dark py-1 text-center"
+      ><%= primerIngresoFecha %>
+    </span>
+  </div>
+  
+  <% } %> <% } %>
+  
