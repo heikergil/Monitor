@@ -5,7 +5,7 @@
 <h1 class="text-center my-5">MP - BRISAS</h1>
 
 <!-- PROGRAMA DEL DIA ANTERIOR -->
-<%if (typeof programacionAnteriorNew === 'undefined') {}else { %>
+<%if (programacionAnteriorNew.length == 0) {}else { %>
 <div class="grid-mprima w-100 mt-5">
   <span class="itemmp border border-dark py-1 text-center">item</span>
   <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
@@ -18,8 +18,26 @@
     >hora llegada planta</span
   >
 </div>
+<<<<<<< HEAD
 <% let item = 0; for (let programa of programacionAnteriorNew) { item += 1 %> 
 
+=======
+
+
+<% var itemy = 0; %> <%for (let programa of programacionAnteriorNew) {%> 
+<%
+const date = programa.fecha; 
+const fechay = date.getUTCDate() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCFullYear(); 
+const llegaday = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(); 
+
+const primerIngreso = programa.primerIngreso;
+
+ const primerIngresoFecha = primerIngreso.getUTCHours() + ':' + primerIngreso.getUTCMinutes() + ':' + primerIngreso.getUTCSeconds();;
+ 
+ itemy += 1;
+ 
+%>
+>>>>>>> d25e56e47aa31297254040374564d7cfbab1e3e9
 
 <div class="grid-mprima w-100">
   <span class="itemmp border border-dark py-1 text-center">
@@ -44,13 +62,25 @@
     ><%=programa.lote%></span
   >
   <span class="llegadamp border border-dark py-1 text-center"
+<<<<<<< HEAD
     ><%= programa.primerIngreso %>
   </span>
 </div>
 
 <% } %> <% } %>
 
+=======
+    ><%= primerIngresoFecha  %>
+  </span>
+</div>
+
+<% } %> 
+
+
+<% } %>
+>>>>>>> d25e56e47aa31297254040374564d7cfbab1e3e9
 <!-- PROGRAMA ACTUAL -->
+
 <div class="grid-mprima w-100 mt-5">
   <span class="itemmp border border-dark py-1 text-center">item</span>
   <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
@@ -94,7 +124,7 @@
 <% } %>
 
 <!-- PROGRAMA PROXIMO DIA -->
-<%if (typeof programacionProximaNew === 'undefined') {}else { %>
+<%if (programacionProximaNew.length == 0) {}else { %>
 <div class="grid-mprima w-100 mt-5">
   <span class="itemmp border border-dark py-1 text-center">item</span>
   <span class="proveedormp border border-dark py-1 text-center">Proveedor</span>
