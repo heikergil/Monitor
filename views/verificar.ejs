@@ -3,7 +3,7 @@
 
 
 <h2 class="my-3 text-center">NUEVO INGRESO</h2>
-    <form id="ingreso" class="d-flex justify-content-sm-around" action="/new" method="post">
+    <form id="ingreso" class="d-flex justify-content-sm-around needs-validation" action="/new" method="post" novalidate>
     
         <label for="lote">
             <input class="form-control" type="text" name="lote" id="lote" form="ingreso" value="<%= programa.lote %>" readonly>  
@@ -25,11 +25,11 @@
     </label> -->
 
     <label for="numeroBines">
-        <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas">
+        <input class="form-control" type="number" name="numeroBines" placeholder="Bines/gavetas" required>
     </label>
 
     <label for="remitido">
-        <input class="form-control" type="number" name="remitido" placeholder="Libraje">
+        <input class="form-control" type="number" name="remitido" placeholder="Libraje" required>
     </label>
     
     <button type="submit" class="btn btn-primary">Ingresar</button>
