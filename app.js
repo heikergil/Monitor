@@ -87,11 +87,11 @@ app.get("/", (req, res) => {
 
 
 
-app.use((err, req, res, next) => {
-  console.log("utils catchAsync func its working");
+// app.use((err, req, res, next) => {
+//   console.log("utils catchAsync func its working");
   
-  res.render("error", { err });
-});
+//   res.render("error", { err });
+// });
 
 
 const port = process.env.PORT || 3000;
