@@ -104,13 +104,13 @@
     <!-- PROGRAMA DEL DIA ANTERIOR -->
     <%if (typeof programacionAnterior === 'undefined') {}else {  %>
     <div class="grid-programa w-100 mt-5">
-        <span class="itemp border border-dark py-1  text-center">item</span>
-        <span class="proveedorp border border-dark py-1 text-center">Proveedor</span>
-        <span class="productop border border-dark py-1  text-center">Producto</span>
-        <span class="cantidadp border border-dark py-1  text-center">Cantidad</span>
-        <span class="piscinap border border-dark py-1  text-center">Piscina</span>
-        <span class="lotep border border-dark py-1  text-center">Lote</span> 
-        <span class="llegadap border border-dark py-1  text-center">Fecha</span>
+        <span class="itemp   py-1  text-center titulosMateriaPrima"></span>
+        <span class="proveedorp   py-1 text-center titulosMateriaPrima">Proveedor</span>
+        <span class="productop   py-1  text-center titulosMateriaPrima">Producto</span>
+        <span class="cantidadp   py-1  text-center titulosMateriaPrima">Cantidad</span>
+        <span class="piscinap   py-1  text-center titulosMateriaPrima">Piscina</span>
+        <span class="lotep   py-1  text-center titulosMateriaPrima">Lote</span> 
+        <span class="llegadap py-1  text-center titulosMateriaPrima">Fecha</span>
     </div>
     <% 
     var itemy = 0;
@@ -127,27 +127,30 @@
         
         itemy += 1
         %> <div class="grid-programa w-100">
-            <span class="itemp border border-dark py-1  text-center"> <a href="/programacion/corregir/<%= programa._id %> "><%=itemy%></a> </span>
-            <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
-            <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
-            <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
-            <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap border border-dark py-1  text-center" ><%= fechaTiempo %></span>
+            <span class="proveedorp border-end py-1 text-center"> <a href="/programacion/corregir/<%= programa._id %>"> <%=programa.proveedor%></a></span>
+            <span class="productop  border-end py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp  border-end py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap border-end py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep border-end py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap border-end py-1  text-center" ><%= fechaTiempo %></span>
         </div>
        
         <% } %> 
-
+        <div class="grid-programa w-100 totalProgramacion ">
+            <span class="  text-center py-1 cantidadp"><%= '250.000' %></span>  </div>
         <% } %> 
+
+
+
             <!-- PROGRAMA ACTUAL -->
+            <%if (typeof programacion === 'undefined') {}else {  %>
     <div class="grid-programa w-100 mt-5">
-        <span class="itemp border border-dark py-1  text-center">item</span>
-        <span class="proveedorp border border-dark py-1 text-center">Proveedor</span>
-        <span class="productop border border-dark py-1  text-center">Producto</span>
-        <span class="cantidadp border border-dark py-1  text-center">Cantidad</span>
-        <span class="piscinap border border-dark py-1  text-center">Piscina</span>
-        <span class="lotep border border-dark py-1  text-center">Lote</span> 
-        <span class="llegadap border border-dark py-1  text-center">Fecha</span>
+        <span class="proveedorp  py-1 text-center titulosMateriaPrima">Proveedor</span>
+        <span class="productop py-1  text-center titulosMateriaPrima">Producto</span>
+        <span class="cantidadp  py-1  text-center titulosMateriaPrima">Cantidad</span>
+        <span class="piscinap  py-1  text-center titulosMateriaPrima">Piscina</span>
+        <span class="lotep py-1  text-center titulosMateriaPrima">Lote</span> 
+        <span class="llegadap py-1  text-center titulosMateriaPrima">Fecha</span>
     </div>
     <% 
     var item = 0;
@@ -160,27 +163,28 @@
         
         item += 1
         %> <div class="grid-programa w-100">
-            <span class="itemp border border-dark py-1  text-center"><a href="/programacion/corregir/<%=programa._id%>"><%=item%></a></span>
-            <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
-            <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
-            <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
-            <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap border border-dark py-1  text-center" ><%= fechaTiempo %></span>
+            <span class="proveedorp  py-1 text-center"> <a href="/programacion/corregir/<%=programa._id%>"><%=programa.proveedor%> </a> </span>
+            <span class="productop  py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp  py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap  py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep  py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap  py-1  text-center" ><%= fechaTiempo %></span>
         </div>
        
+        <% } %> 
+        <div class="grid-programa w-100 totalProgramacion ">
+            <span class="  text-center py-1 cantidadp"><%= '250.000' %></span>  </div>
         <% } %> 
 
     <!-- PROGRAMA PROXIMO DIA -->
     <%if (typeof programacionProxima === 'undefined') {}else {  %>
     <div class="grid-programa w-100 mt-5">
-        <span class="itemp border border-dark py-1  text-center">item</span>
-        <span class="proveedorp border border-dark py-1 text-center">Proveedor</span>
-        <span class="productop border border-dark py-1  text-center">Producto</span>
-        <span class="cantidadp border border-dark py-1  text-center">Cantidad</span>
-        <span class="piscinap border border-dark py-1  text-center">Piscina</span>
-        <span class="lotep border border-dark py-1  text-center">Lote</span> 
-        <span class="llegadap border border-dark py-1  text-center">Fecha</span>
+        <span class="proveedorp py-1 text-center titulosMateriaPrima">Proveedor</span>
+        <span class="productop  py-1  text-center titulosMateriaPrima">Producto</span>
+        <span class="cantidadp  py-1  text-center titulosMateriaPrima">Cantidad</span>
+        <span class="piscinap py-1  text-center titulosMateriaPrima">Piscina</span>
+        <span class="lotep  py-1  text-center titulosMateriaPrima">Lote</span> 
+        <span class="llegadap  py-1  text-center titulosMateriaPrima">Fecha</span>
     </div>
     <% 
     var itemx = 0;
@@ -193,15 +197,15 @@
         
         itemx += 1
         %> <div class="grid-programa w-100">
-            <span class="itemp border border-dark py-1  text-center"><a href="/programacion/corregir/<%=programa._id%>"><%=itemx%></a></span>
-            <span class="proveedorp border border-dark py-1 text-center"><%=programa.proveedor%></span>
-            <span class="productop border border-dark py-1  text-center" ><%=programa.producto%></span>
-            <span class="cantidadp border border-dark py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="piscinap border border-dark py-1  text-center" ><%=programa.piscina%></span>
-            <span class="lotep border border-dark py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap border border-dark py-1  text-center" ><%= fechaTiempo %></span>
+            <span class="proveedorp  py-1 text-center"><a href="/programacion/corregir/<%=programa._id%>"><%=programa.proveedor%></a></span>
+            <span class="productop  py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp  py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap  py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep  py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap  py-1  text-center" ><%= fechaTiempo %></span>
         </div>
        
         <% } %> 
-
+        <div class="grid-programa w-100 totalProgramacion ">
+            <span class="  text-center py-1 cantidadp"><%= '250.000' %></span>  </div>
         <% } %> 
