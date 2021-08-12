@@ -96,15 +96,15 @@
 </div>
 
 
-    
-    <!-- programacion, programacionAnterior, programacionProxima, -->
-
     </form>
 
     <!-- PROGRAMA DEL DIA ANTERIOR -->
-    <%if (typeof programacionAnterior === 'undefined') {}else {  %>
-    <div class="grid-programa w-100 mt-5">
-        <span class="itemp   py-1  text-center titulosMateriaPrima"></span>
+    <%if (programacionAnterior.length == 0) {}else {
+        const libras = programacionAnterior.map(x => x.cantidad)
+        const totalLibras = libras.reduce((acc,current) => {return acc + current})
+        
+        %>
+    <div class="grid-programa bg-primary text-white w-100 mt-5">
         <span class="proveedorp   py-1 text-center titulosMateriaPrima">Proveedor</span>
         <span class="productop   py-1  text-center titulosMateriaPrima">Producto</span>
         <span class="cantidadp   py-1  text-center titulosMateriaPrima">Cantidad</span>
@@ -112,73 +112,73 @@
         <span class="lotep   py-1  text-center titulosMateriaPrima">Lote</span> 
         <span class="llegadap py-1  text-center titulosMateriaPrima">Fecha</span>
     </div>
-    <% 
-    var itemy = 0;
-    %> 
-
-    
+       
 
     <%for (let programa of programacionAnterior) {%>
         <%    
         const date = programa.fecha;
         const fechaTiempo = ("0" + date.getUTCDate()).slice(-2) + '-' + ("0"+(date.getUTCMonth()+1)).slice(-2) + '-' + ("0"+ date.getUTCFullYear()).slice(-2) 
     + " " + ("0" + date.getUTCHours()).slice(-2) + ':'+ ("0" + date.getUTCMinutes()).slice(-2);
-    
-        
-        itemy += 1
+            
         %> <div class="grid-programa w-100">
-            <span class="proveedorp border-end py-1 text-center"> <a href="/programacion/corregir/<%= programa._id %>"> <%=programa.proveedor%></a></span>
-            <span class="productop  border-end py-1  text-center" ><%=programa.producto%></span>
-            <span class="cantidadp  border-end py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="piscinap border-end py-1  text-center" ><%=programa.piscina%></span>
-            <span class="lotep border-end py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap border-end py-1  text-center" ><%= fechaTiempo %></span>
+            <span class="proveedorp border-start border-bottom border-end  py-1 text-center"> <a href="/programacion/corregir/<%= programa._id %>"> <%=programa.proveedor%></a></span>
+            <span class="productop border-end border-bottom  py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp border-end border-bottom py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap border-end border-bottom py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep border-end border-bottom py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap border-end border-bottom py-1  text-center" ><%= fechaTiempo %></span>
         </div>
        
         <% } %> 
-        <div class="grid-programa w-100 totalProgramacion ">
-            <span class="  text-center py-1 cantidadp"><%= '250.000' %></span>  </div>
+        <div class="grid-programa  w-100 bg-primary text-white ">
+            <span class="  text-center py-1 cantidadp"><%= totalLibras %></span>  </div>
         <% } %> 
 
 
 
             <!-- PROGRAMA ACTUAL -->
-            <%if (typeof programacion === 'undefined') {}else {  %>
-    <div class="grid-programa w-100 mt-5">
-        <span class="proveedorp  py-1 text-center titulosMateriaPrima">Proveedor</span>
+            <%if (programacion.length == 0) {}else {    
+            const libras = programacion.map(x => x.cantidad)
+            const totalLibras = libras.reduce((acc,current) => {return acc + current})
+        %>
+    <div class="grid-programa bg-primary text-white w-100 mt-5">
+        <span class="proveedorp   py-1 text-center titulosMateriaPrima">Proveedor</span>
         <span class="productop py-1  text-center titulosMateriaPrima">Producto</span>
         <span class="cantidadp  py-1  text-center titulosMateriaPrima">Cantidad</span>
         <span class="piscinap  py-1  text-center titulosMateriaPrima">Piscina</span>
         <span class="lotep py-1  text-center titulosMateriaPrima">Lote</span> 
         <span class="llegadap py-1  text-center titulosMateriaPrima">Fecha</span>
     </div>
-    <% 
-    var item = 0;
-    %> 
+    
     <%for (let programa of programacion) {%>
         <% 
         const date = programa.fecha;
         const fechaTiempo = ("0" + date.getUTCDate()).slice(-2) + '-' + ("0"+(date.getUTCMonth()+1)).slice(-2) + '-' + ("0"+ date.getUTCFullYear()).slice(-2) 
     + " " + ("0" + date.getUTCHours()).slice(-2) + ':'+ ("0" + date.getUTCMinutes()).slice(-2);
         
-        item += 1
-        %> <div class="grid-programa w-100">
-            <span class="proveedorp  py-1 text-center"> <a href="/programacion/corregir/<%=programa._id%>"><%=programa.proveedor%> </a> </span>
-            <span class="productop  py-1  text-center" ><%=programa.producto%></span>
-            <span class="cantidadp  py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="piscinap  py-1  text-center" ><%=programa.piscina%></span>
-            <span class="lotep  py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap  py-1  text-center" ><%= fechaTiempo %></span>
+        %> 
+        <div class="grid-programa w-100">
+            <span class="proveedorp  border-start border-bottom border-end  py-1 text-center"> <a href="/programacion/corregir/<%=programa._id%>"><%=programa.proveedor%> </a> </span>
+            <span class="productop border-bottom border-end  py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp border-bottom border-end py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap border-bottom border-end py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep border-bottom border-end py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap border-bottom border-end py-1  text-center" ><%= fechaTiempo %></span>
         </div>
        
         <% } %> 
-        <div class="grid-programa w-100 totalProgramacion ">
-            <span class="  text-center py-1 cantidadp"><%= '250.000' %></span>  </div>
+        <div class="grid-programa w-100 bg-primary text-white ">
+            <span class="  text-center py-1 cantidadp"><%= totalLibras %></span>  </div>
         <% } %> 
 
     <!-- PROGRAMA PROXIMO DIA -->
-    <%if (typeof programacionProxima === 'undefined') {}else {  %>
-    <div class="grid-programa w-100 mt-5">
+    <%
+    if (programacionProxima.length == 0) {}else {
+          
+    const libras = programacionProxima.map(x => x.cantidad)
+    const totalLibras = libras.reduce((acc,current) => {return acc + current})
+    %>
+    <div class="grid-programa bg-primary text-white w-100 mt-5">
         <span class="proveedorp py-1 text-center titulosMateriaPrima">Proveedor</span>
         <span class="productop  py-1  text-center titulosMateriaPrima">Producto</span>
         <span class="cantidadp  py-1  text-center titulosMateriaPrima">Cantidad</span>
@@ -186,26 +186,23 @@
         <span class="lotep  py-1  text-center titulosMateriaPrima">Lote</span> 
         <span class="llegadap  py-1  text-center titulosMateriaPrima">Fecha</span>
     </div>
-    <% 
-    var itemx = 0;
-    %> 
+    
     <%for (let programa of programacionProxima) {%>
         <% 
          const date = programa.fecha;
         const fechaTiempo = ("0" + date.getUTCDate()).slice(-2) + '-' + ("0"+(date.getUTCMonth()+1)).slice(-2) + '-' + ("0"+ date.getUTCFullYear()).slice(-2) 
     + " " + ("0" + date.getUTCHours()).slice(-2) + ':'+ ("0" + date.getUTCMinutes()).slice(-2);
         
-        itemx += 1
         %> <div class="grid-programa w-100">
-            <span class="proveedorp  py-1 text-center"><a href="/programacion/corregir/<%=programa._id%>"><%=programa.proveedor%></a></span>
-            <span class="productop  py-1  text-center" ><%=programa.producto%></span>
-            <span class="cantidadp  py-1  text-center" ><%=programa.cantidad%></span>
-            <span class="piscinap  py-1  text-center" ><%=programa.piscina%></span>
-            <span class="lotep  py-1  text-center" ><%=programa.lote%></span>
-            <span class="fechap  py-1  text-center" ><%= fechaTiempo %></span>
+            <span class="proveedorp border-start border-bottom border-end  py-1 text-center"><a href="/programacion/corregir/<%=programa._id%>"><%=programa.proveedor%></a></span>
+            <span class="productop border-bottom border-end py-1  text-center" ><%=programa.producto%></span>
+            <span class="cantidadp border-bottom border-end py-1  text-center" ><%=programa.cantidad%></span>
+            <span class="piscinap border-bottom border-end py-1  text-center" ><%=programa.piscina%></span>
+            <span class="lotep border-bottom border-end py-1  text-center" ><%=programa.lote%></span>
+            <span class="fechap border-bottom border-end py-1  text-center" ><%= fechaTiempo %></span>
         </div>
        
         <% } %> 
-        <div class="grid-programa w-100 totalProgramacion ">
-            <span class="  text-center py-1 cantidadp"><%= '250.000' %></span>  </div>
+        <div class="grid-programa w-100 bg-primary text-white">
+            <span class="  text-center py-1 cantidadp "><%= totalLibras  %></span>  </div>
         <% } %> 
