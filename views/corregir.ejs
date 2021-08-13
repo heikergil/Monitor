@@ -3,30 +3,30 @@
 <h1 class="text-center my-5 ">verificar lote programado</h1>
 
 
-    <form class="d-flex justify-content-sm-between needs-validation" action="/programacion/corregir/<%= lotePrograma._id%>?_method=PUT" method="post" novalidate>
+    <form class="d-flex justify-content-sm-start align-content-between align-items-center flex-sm-wrap needs-validation" action="/programacion/corregir/<%= lotePrograma._id%>?_method=PUT" method="post" novalidate>
         
     
-    <label for="proveedor">
+    <label class="m-2" for="proveedor">
         <input class="form-control" type="text" name="proveedor" placeholder="Proveedor" value="<%= lotePrograma.proveedor %>" required>
     </label>
 
-    <label for="producto">
+    <label class="m-2" for="producto">
         <input class="form-control" type="text" name="producto" placeholder="Producto" value="<%= lotePrograma.producto %>" required>
     </label>
 
-    <label for="piscina">
+    <label class="m-2" for="piscina">
         <input class="form-control" type="text" name="piscina" placeholder="Piscina" value="<%= lotePrograma.piscina %>" required>
     </label>
 
-    <label for="lote">
+    <label class="m-2" for="lote">
         <input class="form-control" type="number" name="lote" placeholder="Lote" value="<%=lotePrograma.lote%>"required>
     </label>
 
-    <label for="cantidad">
+    <label class="m-2" for="cantidad">
         <input class="form-control" type="number" name="cantidad" placeholder="Cantidad" value="<%= lotePrograma.cantidad %>" required>
     </label>
 
-    <label for="fecha">
+    <label class="m-2" for="fecha">
         <input class="form-control" type="date" name="fecha" value="<%=fecha %>" required>  
     </label>
 

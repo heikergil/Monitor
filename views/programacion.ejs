@@ -1,19 +1,9 @@
 <% layout('layouts/boilerplate') -%>
 
-<h1 class="text-center my-5 ">INGRESO PROGRAMA - BRISAS  <%=fechaIngreso %> </h1>
-
-<div class="container my-3">
-    <form class="h-25 d-flex needs-validation" action="/programacion" method="get" novalidate>
-        <input class="form-control w-25" type="date" id="fechaBusqueda" name="fechaBusqueda" required>
-        <button class="btn btn-success mx-3">Fecha</button>
-        </form>
-</div>
+<h1 class="text-center fs-1 my-2 ">INGRESO PROGRAMA <%=fechaIngreso %> </h1>
 
 
-
-<div class="container-md bg-light">
-<h2 class="my-3 text-center">Ingresar programa</h2>
-
+<div class="container-md p-2 bg-light">
     <form class="d-flex justify-content-sm-start align-content-between flex-sm-wrap needs-validation" action="/programacion" method="post" novalidate>
     
     
@@ -99,7 +89,7 @@
     </form>
 
     <!-- PROGRAMA DEL DIA ANTERIOR -->
-    <%if (programacionAnterior.length == 0) {}else {
+    <%if (typeof programacionAnterior == "undefined" || programacionAnterior.length == 0) {}else {
         const libras = programacionAnterior.map(x => x.cantidad)
         const totalLibras = libras.reduce((acc,current) => {return acc + current})
         
@@ -173,7 +163,7 @@
 
     <!-- PROGRAMA PROXIMO DIA -->
     <%
-    if (programacionProxima.length == 0) {}else {
+    if (typeof programacionProxima == "undefined" || programacionProxima.length == 0) {}else {
           
     const libras = programacionProxima.map(x => x.cantidad)
     const totalLibras = libras.reduce((acc,current) => {return acc + current})
@@ -206,3 +196,11 @@
         <div class="grid-programa w-100 bg-primary text-white">
             <span class="  text-center py-1 cantidadp "><%= totalLibras  %></span>  </div>
         <% } %> 
+
+        <div class="container my-5">
+        <h2 class="text-uppercase my-1 mx-1 fs-6" >buscar por fecha:</h2>
+    <form class="h-25 d-flex needs-validation" action="/programacion" method="get" novalidate>
+        <input class="form-control w-25" type="date" id="fechaBusqueda" name="fechaBusqueda" required>
+        <button class="btn btn-success mx-3">Fecha</button>
+        </form>
+</div>

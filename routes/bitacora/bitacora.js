@@ -14,13 +14,15 @@ function wrapAsync(fn) {
 router.get('/bitacora', wrapAsync(async (req, res, next) => {
 
     const { fechaBusqueda } = req.query;
-    
+    console.log(fechaBusqueda);
     // when user input a date
     const date = new Date(fechaBusqueda)
+    console.log(date);
     // set to 5 hours to ovoid problem with the local time zone.
     // after 19:00 new "ingresos" are logged with next day date because the server transforms dates to UTC (adding 5 hours)
     // Ecuador local Time is -5 GMT
     date.setUTCHours(5,0,0,0);
+    console.log(date);
     const datePlus = new Date(date);
     datePlus.setDate(datePlus.getDate() + 1)
     
@@ -34,7 +36,6 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     } else {
     // gets current date automatically
     const hora_actual = new Date();
-    hora_actual.setHours(hora_actual.getHours() - 5)
     // set to 5 hours to ovoid problem with the local time zone.
     // after 19:00 new "ingresos" are logged with next day date because the server transforms dates to UTC (adding 5 hours)
     // Ecuador local Time is -5 GMT
@@ -44,7 +45,7 @@ router.get('/bitacora', wrapAsync(async (req, res, next) => {
     
 
 
-     // fecha ayer º
+     // fecha ayer
 
      const fechaAnterior = new Date();
      fechaAnterior.setHours(fechaAnterior.getHours() -5);
@@ -92,6 +93,7 @@ router.get('/verificar', wrapAsync(async (req, res, next) => {
 
 router.post('/new', wrapAsync(async (req, res, next) => {
     const nuevoIngreso = new Ingreso(req.body)
+    console.log(nuevoIngreso);
 
     
     if (nuevoIngreso.fecha) {
@@ -101,9 +103,8 @@ router.post('/new', wrapAsync(async (req, res, next) => {
     } else {
         // new ingreso with current date in UTC (+5 hours Ecuador local time)
         var date = new Date();
-
         nuevoIngreso.fecha = date;
-        date.setHours(date.getHours() -5);
+        console.log(nuevoIngreso);
         await nuevoIngreso.save();
         res.redirect('bitacora');  
     }

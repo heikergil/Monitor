@@ -13,9 +13,11 @@ router.get('/programacion', catchAsync(async (req, res, next) => {
 if (fechaBusqueda) {
     // when user input a date
     const date = new Date(fechaBusqueda)
-    // date.setHours(date.getHours() + 5);
+    const date_rango = new Date(date)
+    date_rango.setHours(date_rango.getHours() + 23,59,59);
+
     const options = {year: 'numeric', month: 'numeric', day: 'numeric' };
-    const programacion = await Programa.find({"fecha" : date});
+    const programacion = await Programa.find({"fecha": {$gte:date, $lte: date_rango}});
     const fechaIngreso =  date.toISOString().split('T')[0];
     res.render('programacion', { programacion, fecha: date.toLocaleDateString('en-GB', options), fechaIngreso:fechaIngreso });
 

@@ -3,8 +3,8 @@
 
 <% if (typeof lotes !== 'undefined') {%> 
 
-<h2 class="my-3 text-center">NUEVO INGRESO</h2>
-    <form id="ingreso" class="d-flex justify-content-sm-around" action="/verificar" method="GET">
+<h2 class="my-3 fs-2 text-uppercase text-center">nuevo ingreso</h2>
+    <form id="ingreso" class="d-flex justify-content-sm-evenly" action="/verificar" method="GET">
     
         <label for="lote">
             <select class="form-select" name="lote" id="lote" form="ingreso" placeholder="lote">
@@ -45,7 +45,7 @@
 
 <% var item = 0; %> 
 
-<h1 class="text-center my-5 ">INGRESO MP - BRISAS  <%= fecha %> </h1>
+<h1 class="text-center fs-2 text-uppercase  my-5 ">ingreso materia prima <%= fecha %> </h1>
 
 <div class="container my-3">
     <form class="h-25 d-flex" action="/bitacora" method="get">
@@ -67,8 +67,8 @@
 <%for (let ingreso of ingresos) {%>
     <% 
     const date = ingreso.fecha;
-    const fecha = date.getUTCDate() + '/' + date.getUTCMonth() + "/" + date.getUTCFullYear();
-    const llegada = date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
+    const fecha = date.getDate() + '/' + date.getMonth() + "/" + date.getFullYear();
+    const llegada = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     
     item += 1
     %> <div class="grid-ingreso w-100">
