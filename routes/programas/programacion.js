@@ -53,11 +53,11 @@ if (fechaBusqueda) {
         const fechaIngreso =  fechaAuto.toISOString().split('T')[0];
 
         const programacionAnterior = await Programa.find({"fecha": {$gte:fechaAnterior, $lte: fechaAnterior_rango}});
-        console.log(programacionAnterior)
+    
         const programacion = await Programa.find({"fecha" : {$gte:fechaAuto, $lte:fechaAuto_rango}});
-        console.log(programacion)
+ 
         const programacionProxima = await Programa.find({"fecha": {$gte: fechaProxima, $lte: fechaProxima_rango}});
-        console.log("***********", programacionProxima);
+
         res.render('programacion', { programacion, programacionAnterior, programacionProxima, fecha: fechaAuto.toDateString('en-GB', options), fechaBusqueda: fechaAuto, fechaIngreso:fechaIngreso});
 }
 }))
@@ -66,9 +66,9 @@ if (fechaBusqueda) {
 // INGRESAR PROGRAMAS DE RECEPCION
 
 router.post('/programacion',catchAsync( async (req, res, next) => {
-    console.log(req.body)
+ 
     const datos = req.body;
-    console.log(datos);
+  
 
     const fecha = datos.fecha;
     const hora = datos.hora;
@@ -77,7 +77,6 @@ router.post('/programacion',catchAsync( async (req, res, next) => {
     const llegada = new Date(fechaLlegada);
     llegada.setHours(llegada.getHours() - 5);
     datos.fecha = llegada;
-    console.log(datos.fecha);
     delete datos.hora;
     const nuevoPrograma = new Programa(datos)
     const nuevoLote = nuevoPrograma.lote;
@@ -85,7 +84,6 @@ router.post('/programacion',catchAsync( async (req, res, next) => {
     if (verificarLote) {
          res.send(`Lote ya esta asignado a ${verificarLote.proveedor} piscina: ${verificarLote.piscina}`);
      } else {
-         console.log(nuevoPrograma);
       await nuevoPrograma.save()
       res.redirect('/programacion'); 
      }
@@ -97,7 +95,6 @@ router.get('/programacion/corregir/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const lotePrograma = await Programa.findById(id);
     const date = lotePrograma.fecha;
-    console.log(date); 
     const fecha =  date.toISOString().split('T')[0];
     res.render('corregir', { lotePrograma, fecha }); 
 }))
@@ -106,7 +103,6 @@ router.get('/programacion/corregir/:id', catchAsync(async (req, res, next) => {
 // MODIFICAR LOTE PROGRAMADO EN DB
 router.put('/programacion/corregir/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    console.log(req.body);
     const  temp = req.body.fecha;
     const dateTime = temp + 'T' + req.body.hora;
     const date = new Date(dateTime);

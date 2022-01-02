@@ -37,7 +37,6 @@ router.get(
       fecha: { $gte: fechaAnterior, $lte: fechaAnterior_rango },
     });
     const programacionAnteriorNew = await returnMateriaPrima(programacionAnterior);
-    console.log(programacionAnteriorNew);
     
     const programacion = await Programa.find({
       fecha: { $gte: fechaAuto, $lte: fechaAuto_rango },
