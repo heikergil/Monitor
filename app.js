@@ -81,7 +81,7 @@ app.get("/matprima", matPrima);
 
 app.get("/", (req, res) => {
   res.send(
-    "This is monitor test APP, please go to  http://localhost:3000/bitacora "
+    "This is monitor test APP, please go to /bitacora "
   );
 });
 
